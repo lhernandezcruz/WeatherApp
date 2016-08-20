@@ -46,20 +46,21 @@ function updateTemp(temp, unit) {
 $(document).ready(function() {
   // upon loading the page
   //get city and country, update html elements
-  var city = geoplugin_city();
-  var countryCode = geoplugin_countryCode();
-  $("#location").html(city + ", " + countryCode);
+  $.getJSON('http://ipinfo.io', function (data) {
+        var city = data.city;
+        var countryCode = data.country;
+        
+        $("#location").html(city + ", " + countryCode);
+        // get JSON stuff
+        // get info and update appropriate things
+        $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + countryCode + "&units=metric&appid=cff5475be78d7ccc46d0b2ccf804d821", function (json) {
+            var icon = json["weather"][0]["icon"];
+            updateIcon(icon);
+            var weatherDesc = json["weather"][0]["description"];
 
-  // get JSON stuff
-  // get info and update appropriate things
-  $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + countryCode + "&units=metric&appid=cff5475be78d7ccc46d0b2ccf804d821", function(json) {
-    var icon = json["weather"][0]["icon"];
-    updateIcon(icon);
-    var weatherDesc = json["weather"][0]["description"];
-
-    $("#tempDesc").html(weatherDesc);
-    currentTemp = parseInt(json["main"]["temp"], 10);
-    currentUnit = "C";
-    updateTemp(currentTemp,currentUnit);
-  });
+            $("#tempDesc").html(weatherDesc);
+            currentTemp = parseInt(json["main"]["temp"], 10);
+            currentUnit = "C";
+            updateTemp(currentTemp, currentUnit);
+        });
 });
