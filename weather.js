@@ -1,6 +1,6 @@
 const API_KEY = 'cff5475be78d7ccc46d0b2ccf804d821';
-const API_URL = 'http://api.openweathermap.org/data/2.5/weather?';
-const ICON_URL = 'http://openweathermap.org/img/w/';
+const API_URL = 'https://api.openweathermap.org/data/2.5/weather?';
+const ICON_URL = 'https://openweathermap.org/img/w/';
 const ICON_EXT = '.png';
 const UNITS = 'imperial';
 
