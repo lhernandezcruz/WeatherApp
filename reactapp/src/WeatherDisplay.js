@@ -72,7 +72,7 @@ const WeatherDisplay = (props) => {
       </Flex>
       <Text fontSize="2xs">
         <Link
-          href="https:/github.com/lhernandezcruz/WeatherApp"
+          href="https://github.com/lhernandezcruz/WeatherApp"
           color="teal.500"
           textDecoration="underline"
         >
@@ -82,7 +82,7 @@ const WeatherDisplay = (props) => {
       <Text fontSize="2xs">
         By{" "}
         <Link
-          href="https:/github.com/lhernandezcruz"
+          href="https://github.com/lhernandezcruz"
           color="teal.500"
           textDecoration="underline"
         >
