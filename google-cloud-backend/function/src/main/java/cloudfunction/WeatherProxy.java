@@ -36,6 +36,7 @@ public class WeatherProxy implements HttpFunction {
     response.appendHeader("Access-Control-Allow-Origin", "*");
     if ("OPTIONS".equals(request.getMethod())) {
       response.appendHeader("Access-Control-Allow-Methods", "GET");
+      response.appendHeader("Access-Control-Allow-Headers", "Latitude, Longitude");
       response.appendHeader("Access-Control-Max-Age", "3600");
       response.setStatusCode(HttpsURLConnection.HTTP_NO_CONTENT);
       return;
