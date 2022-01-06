@@ -66,5 +66,8 @@
 # target
 /google-cloud-backend/function/target
 
-#vscode
+# vscode
 .vscode/
+
+# function invoker
+*java-function-invoker-*.jar
