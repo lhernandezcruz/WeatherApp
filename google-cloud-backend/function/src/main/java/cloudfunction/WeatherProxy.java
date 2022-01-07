@@ -1,5 +1,6 @@
 package cloudfunction;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.net.ssl.HttpsURLConnection;
 import com.google.cloud.functions.HttpFunction;
 import com.google.cloud.functions.HttpRequest;
@@ -25,6 +26,7 @@ import java.util.Optional;
  * part of http headers that
  * are then used to fetch weather from third party service.
  */
+@ApplicationScoped
 public class WeatherProxy implements HttpFunction {
   private static String OPEN_WEATHER_API = "https://api.openweathermap.org/data/2.5/weather";
   private static HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
@@ -47,8 +49,8 @@ public class WeatherProxy implements HttpFunction {
       return;
     }
 
-    Double latitude = parseCoordinate(request.getFirstHeader("Latitude").orElse(null));
-    Double longitude = parseCoordinate(request.getFirstHeader("Longitude").orElse(null));
+    Double latitude = parseCoordinate(getHeaderIgnoreCase(request, "Latitude").orElse(null));
+    Double longitude = parseCoordinate(getHeaderIgnoreCase(request, "Longitude").orElse(null));
 
     if (latitude == null || longitude == null) {
       response.setStatusCode(HttpsURLConnection.HTTP_BAD_REQUEST, "latitude and longitude must be provied");
@@ -95,5 +97,20 @@ public class WeatherProxy implements HttpFunction {
     } catch (NumberFormatException | NullPointerException ex) {
       return null;
     }
+  }
+
+  /**
+   * Get header ignoring case
+   */
+  private Optional<String> getHeaderIgnoreCase(HttpRequest httpRequest, String headerName) {
+    return httpRequest.getHeaders().keySet()
+        .stream()
+        .filter(header -> {
+          return header.equalsIgnoreCase(headerName);
+        })
+        .findFirst()
+        .flatMap(matchedHeader -> {
+          return httpRequest.getFirstHeader(matchedHeader);
+        });
   }
 }

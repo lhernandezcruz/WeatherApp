@@ -1,10 +1,9 @@
 # Create zip file
 data "archive_file" "function_code_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/function"
-  output_path = "${path.module}/temp/weather-function.zip"
+  source_dir  = "${path.module}/function/target/deployment"
+  output_path = "${path.module}/temp/weather-function-jar.zip"
 }
-
 
 # Create bucket to store zip file
 resource "google_storage_bucket" "weather_proxy_bucket" {
@@ -33,7 +32,7 @@ resource "google_cloudfunctions_function" "function" {
   source_archive_bucket = google_storage_bucket.weather_proxy_bucket.name
   source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = true
-  entry_point           = "cloudfunction.WeatherProxy"
+  entry_point           = "io.quarkus.gcp.functions.QuarkusHttpFunction"
 
   environment_variables = {
     OPEN_WEATHER_API_KEY = var.open_weather_api_key
