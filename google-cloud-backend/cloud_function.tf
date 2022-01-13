@@ -11,7 +11,6 @@ resource "google_storage_bucket" "weather_proxy_bucket" {
   location = "US"
 }
 
-
 # Upload zip file
 resource "google_storage_bucket_object" "archive" {
   name = "weather_proxy_function_${data.archive_file.function_code_zip.output_md5}.zip"
@@ -28,11 +27,10 @@ resource "google_cloudfunctions_function" "function" {
   description = "Weather proxy function"
   runtime     = "java11"
 
-  available_memory_mb   = 128
   source_archive_bucket = google_storage_bucket.weather_proxy_bucket.name
   source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = true
-  entry_point           = "io.quarkus.gcp.functions.QuarkusHttpFunction"
+  entry_point           = "io.quarkus.gcp.functions.http.QuarkusHttpFunction"
 
   environment_variables = {
     OPEN_WEATHER_API_KEY = var.open_weather_api_key

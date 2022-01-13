@@ -16,7 +16,7 @@ const WeatherDisplay = (props) => {
     setLoading(true);
     const fetchData = async () => {
       const result = await axios(
-        "https://us-west1-lhc-weather-proxy.cloudfunctions.net/weather-proxy-function",
+        process.env.REACT_APP_WEATHER_ENDPOINT,
         {
           headers: {
             Latitude: props.latitude,
