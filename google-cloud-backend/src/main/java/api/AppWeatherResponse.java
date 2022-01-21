@@ -1,15 +1,22 @@
 package api;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 /**
  * The public response of the weather application which provides information
  * required to
  * display current weather in https://weather.lhernandezcruz.com
  */
+@RegisterForReflection
 public class AppWeatherResponse {
   String cityName;
   int temperature;
   String description;
   String iconId;
+
+  public AppWeatherResponse() {
+
+  }
 
   public AppWeatherResponse(String cityName, int temperature, String description, String iconId) {
     this.cityName = cityName;
