@@ -64,10 +64,11 @@
 */temp/
 
 # target
-/google-cloud-backend/function/target
+/google-cloud-backend/target
 
 # vscode
 .vscode/
 
-# function invoker
-*java-function-invoker-*.jar
+# waypoint files
+*data.db
+*waypoint-restore.db.lock

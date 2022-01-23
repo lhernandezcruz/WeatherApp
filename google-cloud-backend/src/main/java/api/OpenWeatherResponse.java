@@ -2,14 +2,14 @@ package api;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Retains only a portion of the information from OpenWeather API response
  */
 public class OpenWeatherResponse {
-  class MainValues {
-    @SerializedName("temp")
+  static class MainValues {
+    @JsonProperty("temp")
     Double temperature;
 
     public Double getTemperature() {
@@ -25,11 +25,11 @@ public class OpenWeatherResponse {
     }
   }
 
-  class WeatherDescription {
-    @SerializedName("main")
+  static class WeatherDescription {
+    @JsonProperty("main")
     String mainDescription;
 
-    @SerializedName("icon")
+    @JsonProperty("icon")
     String iconId;
 
     public String getMainDescription() {
@@ -49,13 +49,13 @@ public class OpenWeatherResponse {
     }
   }
 
-  @SerializedName("name")
+  @JsonProperty("name")
   String cityName;
 
-  @SerializedName("main")
+  @JsonProperty("main")
   MainValues mainValues;
 
-  @SerializedName("weather")
+  @JsonProperty("weather")
   List<WeatherDescription> weatherDescriptions;
 
   public void setCityName(String cityName) {
