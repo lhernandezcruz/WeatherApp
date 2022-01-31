@@ -4,8 +4,8 @@ import { Flex } from "@chakra-ui/react";
 
 function App() {
   const [location, setLocation] = useState({
-    longitude: -122.08,
-    latitude: 37.39,
+    longitude: null,
+    latitude: null,
   });
 
   const getUserLocation = () => {

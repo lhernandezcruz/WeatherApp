@@ -15,15 +15,8 @@ const WeatherDisplay = (props) => {
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
-      const result = await axios(
-        process.env.REACT_APP_WEATHER_ENDPOINT,
-        {
-          headers: {
-            Latitude: props.latitude,
-            Longitude: props.longitude,
-          },
-        }
-      );
+      const headers = props.latitude && props.longitude && { headers : { Latitude: props.latitude, Longitude: props.longitude }};
+      const result = await axios(process.env.REACT_APP_WEATHER_ENDPOINT, headers);
 
       // TODO: add error state
       const newWeather = {
