@@ -59,9 +59,9 @@ public class AppWeatherResponse {
 
   public static AppWeatherResponse fromOpenWeatherApi(OpenWeatherResponse openWeatherResponse) {
     return new AppWeatherResponse(
-        openWeatherResponse.getCityName(),
-        openWeatherResponse.getTemperature(),
-        openWeatherResponse.getDescription(),
-        openWeatherResponse.getIconId());
+      openWeatherResponse.getCityName(),
+      openWeatherResponse.getTemperature(),
+      openWeatherResponse.getDescription(),
+      openWeatherResponse.getIconId());
   }
 }
