@@ -57,6 +57,14 @@ public class AppWeatherResponse {
     this.iconId = iconId;
   }
 
+  public static AppWeatherResponse fromLocationIqAndOpenWeatherApi(LocationIqResponse locationIqResponse, OpenWeatherResponse openWeatherResponse) {
+    return new AppWeatherResponse(
+      locationIqResponse.getAddress().getCity(),
+      openWeatherResponse.getTemperature(),
+      openWeatherResponse.getDescription(),
+      openWeatherResponse.getIconId());
+  }
+
   public static AppWeatherResponse fromOpenWeatherApi(OpenWeatherResponse openWeatherResponse) {
     return new AppWeatherResponse(
       openWeatherResponse.getCityName(),
