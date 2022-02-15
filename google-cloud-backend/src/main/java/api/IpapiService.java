@@ -1,5 +1,7 @@
 package api;
 
+import java.util.concurrent.CompletionStage;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
@@ -12,5 +14,5 @@ public interface IpapiService {
 
     @GET
     @Path("/{ipAddress}/json")
-    IpapiResponse getLocation(@PathParam String ipAddress);
+    CompletionStage<IpapiResponse> getLocation(@PathParam String ipAddress);
 }

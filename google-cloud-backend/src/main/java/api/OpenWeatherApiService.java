@@ -1,5 +1,7 @@
 package api;
 
+import java.util.concurrent.CompletionStage;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
@@ -11,10 +13,10 @@ import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 public interface OpenWeatherApiService {
 
   @GET
-  OpenWeatherResponse getWeatherByCoordinates(@QueryParam Double lat, @QueryParam Double lon,
+  CompletionStage<OpenWeatherResponse> getWeatherByCoordinates(@QueryParam Double lat, @QueryParam Double lon,
       @QueryParam String units, @QueryParam String appId);
 
   @GET
-  OpenWeatherResponse getWeatherByCity(@QueryParam String q, @QueryParam String units, @QueryParam String appId);
+  CompletionStage<OpenWeatherResponse> getWeatherByCity(@QueryParam String q, @QueryParam String units, @QueryParam String appId);
 
 }
