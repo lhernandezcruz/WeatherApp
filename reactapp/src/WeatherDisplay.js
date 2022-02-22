@@ -21,9 +21,9 @@ const WeatherDisplay = (props) => {
       // TODO: add error state
       const newWeather = {
         cityName: result.data.cityName,
-        temperature: result.data.temperature,
-        condition: result.data.description,
-        iconId: result.data.iconId,
+        temperature: result.data.current.temperature,
+        condition: result.data.current.description,
+        icon: result.data.current.icon,
       };
 
       setWeather(newWeather);
@@ -37,7 +37,6 @@ const WeatherDisplay = (props) => {
     return <Spinner color="white"></Spinner>;
   }
 
-  const iconUrl = `https://openweathermap.org/img/w/${weather.iconId}.png`;
   return (
     <Flex
       backgroundSize="contain"
@@ -62,7 +61,7 @@ const WeatherDisplay = (props) => {
       />
       <Flex flexGrow="2" flexDirection="column" alignItems="center">
         <Text fontSize="3xl">{weather.cityName}</Text>
-        <Img src={iconUrl} justifySelf="center" w="50px" h="50px"></Img>
+        <Img src={weather.icon} justifySelf="center" w="50px" h="50px"></Img>
         <Text fontSize="3xl">{weather.temperature} &deg;F</Text>
         <Text fontSize="3xl">{weather.condition}</Text>
       </Flex>

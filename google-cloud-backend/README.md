@@ -28,7 +28,7 @@ Follow the `Sign Up`, `Install gloud command`, `Enable Google Cloud Run`, `Authe
 
 ### Local env setup
 
-Add environment variables for both `OPEN_WEATHER_API_KEY` with an API key from Open Weather API and `GOOGLE_PROJECT_ID` with the GCP project id.
+Add environment variables for `WEATHER_API_KEY` with an API key from Weather API, `LOCATION_IQ_API_KEY` from Location IQ, and `GOOGLE_PROJECT_ID` with the GCP project id.
 
 ### Build
 

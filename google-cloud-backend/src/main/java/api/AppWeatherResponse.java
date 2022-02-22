@@ -9,10 +9,49 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  */
 @RegisterForReflection
 public class AppWeatherResponse {
+  @RegisterForReflection
+  static class Current {
+    int temperature;
+    String description;
+    String icon;
+
+    public Current() {
+
+    }
+
+    public Current(int temperature, String description, String icon) {
+      this.temperature = temperature;
+      this.description = description;
+      this.icon = icon;
+    }
+
+    public int getTemperature() {
+      return temperature;
+    }
+
+    public void setTemperature(int temperature) {
+      this.temperature = temperature;
+    }
+
+    public String getDescription() {
+      return description;
+    }
+
+    public void setDescription(String description) {
+      this.description = description;
+    }
+
+    public String getIcon() {
+      return icon;
+    }
+
+    public void setIcon(String icon) {
+      this.icon = icon;
+    }
+  }
+
   String cityName;
-  int temperature;
-  String description;
-  String iconId;
+  Current current;
 
   public AppWeatherResponse() {
 
@@ -20,9 +59,7 @@ public class AppWeatherResponse {
 
   public AppWeatherResponse(String cityName, int temperature, String description, String iconId) {
     this.cityName = cityName;
-    this.temperature = temperature;
-    this.description = description;
-    this.iconId = iconId;
+    this.current = new Current(temperature, description, iconId);
   }
 
   public String getCityName() {
@@ -33,43 +70,28 @@ public class AppWeatherResponse {
     this.cityName = cityName;
   }
 
-  public int getTemperature() {
-    return temperature;
+  public Current getCurrent() {
+    return current;
   }
 
-  public void setTemperature(int temperature) {
-    this.temperature = temperature;
+  public void setCurrent(Current current) {
+    this.current = current;
   }
 
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getIconId() {
-    return iconId;
-  }
-
-  public void setIconId(String iconId) {
-    this.iconId = iconId;
-  }
-
-  public static AppWeatherResponse fromLocationIqAndOpenWeatherApi(LocationIqResponse locationIqResponse, OpenWeatherResponse openWeatherResponse) {
+  public static AppWeatherResponse fromLocationIqAndWeatherApi(LocationIqResponse locationIqResponse,
+      WeatherApiResponse weatherApiResponse) {
     return new AppWeatherResponse(
-      locationIqResponse.getAddress().getCity(),
-      openWeatherResponse.getTemperature(),
-      openWeatherResponse.getDescription(),
-      openWeatherResponse.getIconId());
+        locationIqResponse.getAddress().getCity(),
+        weatherApiResponse.getCurrent().getTemperature().intValue(),
+        weatherApiResponse.getCurrent().getCondition().getText(),
+        weatherApiResponse.getCurrent().getCondition().getIcon());
   }
 
-  public static AppWeatherResponse fromOpenWeatherApi(OpenWeatherResponse openWeatherResponse) {
+  public static AppWeatherResponse fromWeatherApi(WeatherApiResponse weatherApiResponse) {
     return new AppWeatherResponse(
-      openWeatherResponse.getCityName(),
-      openWeatherResponse.getTemperature(),
-      openWeatherResponse.getDescription(),
-      openWeatherResponse.getIconId());
+        weatherApiResponse.getLocation().getName(),
+        weatherApiResponse.getCurrent().getTemperature().intValue(),
+        weatherApiResponse.getCurrent().getCondition().getText(),
+        weatherApiResponse.getCurrent().getCondition().getIcon());
   }
 }

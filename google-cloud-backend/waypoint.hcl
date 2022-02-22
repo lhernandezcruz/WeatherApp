@@ -22,7 +22,7 @@ app "weather-api" {
 
       unauthenticated = true
       static_environment = {
-        "OPEN_WEATHER_API_KEY" = var.open_weather_api_key
+        "WEATHER_API_KEY" = var.weather_api_key
         "LOCATION_IQ_API_KEY" = var.location_iq_api_key
       }
     }
@@ -33,10 +33,10 @@ app "weather-api" {
   }
 }
 
-variable "open_weather_api_key" {
+variable "weather_api_key" {
   type = string
   description = "key used to retrieve weather from Open Weather API"
-  env = ["OPEN_WEATHER_API_KEY"]
+  env = ["WEATHER_API_KEY"]
 }
 
 variable "location_iq_api_key" {

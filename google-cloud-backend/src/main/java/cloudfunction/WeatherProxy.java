@@ -21,8 +21,8 @@ import api.AppWeatherResponse;
 import api.IpapiService;
 import api.LocationIqResponse;
 import api.LocationIqService;
-import api.OpenWeatherApiService;
-import api.OpenWeatherResponse;
+import api.WeatherApiResponse;
+import api.WeatherApiService;
 
 /**
  * The cloud function serves as a proxy to fetch weather information from third
@@ -35,11 +35,8 @@ import api.OpenWeatherResponse;
 @ApplicationScoped
 public class WeatherProxy {
 
-  static final String LOCATION_FORMAT = "%s,%s,%s";
-
-  @Inject
-  @RestClient
-  OpenWeatherApiService openWeatherApiService;
+  static final String CITY_LOCATION_FORMAT = "%s,%s,%s";
+  static final String COORDINATES_LOCATION_FORMAT = "%s,%s";
 
   @Inject
   @RestClient
@@ -50,13 +47,17 @@ public class WeatherProxy {
   LocationIqService locationIqService;
 
   @Inject
-  IpService ipService;
+  @RestClient
+  WeatherApiService weatherApiService;
 
-  @ConfigProperty(name = "open.weather.api.key")
-  private String openWeatherApiKey;
+  @Inject
+  IpService ipService;
 
   @ConfigProperty(name = "location.iq.api.key")
   private String locationIqApiKey;
+
+  @ConfigProperty(name = "weather.api.key")
+  private String weatherApiKey;
 
   @GET
   public CompletionStage<Response> getCurrentWeather(@HeaderParam("Latitude") Double latitude,
@@ -65,22 +66,23 @@ public class WeatherProxy {
 
     // TODO: add error handling
     if (latitude == null || longitude == null) {
-      CompletionStage<OpenWeatherResponse> locationWeatherFuture = ipapiService.getLocation(ipService.getIpAddress(request)).thenCompose(ipInformation -> {
-        String location = String.format(LOCATION_FORMAT, ipInformation.getCity(), ipInformation.getRegionCode(), ipInformation.getCountryCode());
-        return openWeatherApiService.getWeatherByCity(location, "imperial", openWeatherApiKey);
+      CompletionStage<WeatherApiResponse> locationWeatherFuture = ipapiService.getLocation(ipService.getIpAddress(request)).thenCompose(ipInformation -> {
+        String location = String.format(CITY_LOCATION_FORMAT, ipInformation.getCity(), ipInformation.getRegionCode(), ipInformation.getCountryCode());
+        return weatherApiService.getWeather(location, 5, weatherApiKey);
       });
 
-      return locationWeatherFuture.thenApply(openWeatherResponse -> Response.ok().entity(AppWeatherResponse.fromOpenWeatherApi(openWeatherResponse)).build());
+      return locationWeatherFuture.thenApply(weatherApiResponse -> Response.ok().entity(AppWeatherResponse.fromWeatherApi(weatherApiResponse)).build());
     }
 
     // get the city and weather using different providers for better accuracy
     CompletableFuture<LocationIqResponse> locationIqFuture = locationIqService.getLocation(locationIqApiKey, latitude, longitude, "json").toCompletableFuture();
-    CompletableFuture<OpenWeatherResponse> openWeatherFuture = openWeatherApiService.getWeatherByCoordinates(latitude, longitude, "imperial", openWeatherApiKey).toCompletableFuture();
+    String location = String.format(COORDINATES_LOCATION_FORMAT, latitude, longitude);
+    CompletableFuture<WeatherApiResponse> weatherApiFuture = weatherApiService.getWeather(location, 5, weatherApiKey).toCompletableFuture();
 
-    return CompletableFuture.allOf(locationIqFuture, openWeatherFuture).thenApplyAsync(dummy -> {
+    return CompletableFuture.allOf(locationIqFuture, weatherApiFuture).thenApplyAsync(dummy -> {
       LocationIqResponse locationIqResponse = locationIqFuture.join();
-      OpenWeatherResponse openWeatherResponse = openWeatherFuture.join();
-      return Response.ok().entity(AppWeatherResponse.fromLocationIqAndOpenWeatherApi(locationIqResponse, openWeatherResponse)).build();
+      WeatherApiResponse weatherApiResponse = weatherApiFuture.join();
+      return Response.ok().entity(AppWeatherResponse.fromLocationIqAndWeatherApi(locationIqResponse, weatherApiResponse)).build();
     });
   }
 }
