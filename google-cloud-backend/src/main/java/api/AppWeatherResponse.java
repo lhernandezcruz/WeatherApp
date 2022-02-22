@@ -1,5 +1,12 @@
 package api;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
@@ -10,19 +17,19 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection
 public class AppWeatherResponse {
   @RegisterForReflection
-  static class Current {
+  static class Description {
     int temperature;
-    String description;
-    String icon;
+    String text;
+    int iconCode;
 
-    public Current() {
+    public Description() {
 
     }
 
-    public Current(int temperature, String description, String icon) {
+    public Description(int temperature, String text, int iconCode) {
       this.temperature = temperature;
-      this.description = description;
-      this.icon = icon;
+      this.text = text;
+      this.iconCode = iconCode;
     }
 
     public int getTemperature() {
@@ -33,33 +40,76 @@ public class AppWeatherResponse {
       this.temperature = temperature;
     }
 
-    public String getDescription() {
+    public String getText() {
+      return text;
+    }
+
+    public void setText(String text) {
+      this.text = text;
+    }
+
+    public int getIconCode() {
+      return iconCode;
+    }
+
+    public void setIconCode(int iconCode) {
+      this.iconCode = iconCode;
+    }
+  }
+
+  @RegisterForReflection
+  public static class Hour {
+    int time;
+    @JsonUnwrapped
+    Description description;
+
+    public Hour() {
+
+    }
+
+    public Hour(int time, int temperature, String text, int iconCode) {
+      this.time = time;
+      this.description = new Description(temperature, text, iconCode);
+    }
+
+    public int getTime() {
+      return time;
+    }
+
+    public void setTime(int time) {
+      this.time = time;
+    }
+
+    public Description getDescription() {
       return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Description description) {
       this.description = description;
     }
 
-    public String getIcon() {
-      return icon;
-    }
-
-    public void setIcon(String icon) {
-      this.icon = icon;
+    public static Hour fromWeatherApiHour(WeatherApiResponse.Hour hour) {
+      return new Hour(
+          hour.getTimeEpoch(),
+          hour.getTemperature().intValue(),
+          hour.getCondition().getText(),
+          hour.getCondition().getCode());
     }
   }
 
   String cityName;
-  Current current;
+
+  @JsonProperty("current")
+  Description description;
+  List<Hour> hourly;
 
   public AppWeatherResponse() {
 
   }
 
-  public AppWeatherResponse(String cityName, int temperature, String description, String iconId) {
+  public AppWeatherResponse(String cityName, int temperature, String description, int icon) {
     this.cityName = cityName;
-    this.current = new Current(temperature, description, iconId);
+    this.description = new Description(temperature, description, icon);
   }
 
   public String getCityName() {
@@ -70,28 +120,51 @@ public class AppWeatherResponse {
     this.cityName = cityName;
   }
 
-  public Current getCurrent() {
-    return current;
+  public Description getDescription() {
+    return description;
   }
 
-  public void setCurrent(Current current) {
-    this.current = current;
+  public void setDescription(Description description) {
+    this.description = description;
+  }
+
+  public List<Hour> getHourly() {
+    return hourly;
+  }
+
+  public void setHourly(List<Hour> hourly) {
+    this.hourly = hourly;
+  }
+
+  public void setHourly(WeatherApiResponse weatherApiResponse) {
+    this.hourly = weatherApiResponse.getForecast().getForcastDays()
+      .stream()
+      .map(forcastday -> forcastday.getHourly())
+      .flatMap(Collection::stream)
+      .map(weatherApiHour -> Hour.fromWeatherApiHour(weatherApiHour))
+      .collect(Collectors.toList());
   }
 
   public static AppWeatherResponse fromLocationIqAndWeatherApi(LocationIqResponse locationIqResponse,
       WeatherApiResponse weatherApiResponse) {
-    return new AppWeatherResponse(
+
+    AppWeatherResponse appWeatherResponse = new AppWeatherResponse(
         locationIqResponse.getAddress().getCity(),
         weatherApiResponse.getCurrent().getTemperature().intValue(),
         weatherApiResponse.getCurrent().getCondition().getText(),
-        weatherApiResponse.getCurrent().getCondition().getIcon());
+        weatherApiResponse.getCurrent().getCondition().getCode());
+    appWeatherResponse.setHourly(weatherApiResponse);
+    return appWeatherResponse;
   }
 
   public static AppWeatherResponse fromWeatherApi(WeatherApiResponse weatherApiResponse) {
-    return new AppWeatherResponse(
+    AppWeatherResponse appWeatherResponse = new AppWeatherResponse(
         weatherApiResponse.getLocation().getName(),
         weatherApiResponse.getCurrent().getTemperature().intValue(),
         weatherApiResponse.getCurrent().getCondition().getText(),
-        weatherApiResponse.getCurrent().getCondition().getIcon());
+        weatherApiResponse.getCurrent().getCondition().getCode());
+        appWeatherResponse.setHourly(weatherApiResponse);
+    appWeatherResponse.setHourly(weatherApiResponse);
+    return appWeatherResponse;
   }
 }
