@@ -55,7 +55,12 @@ function App() {
 
   if (isLoading) {
     return (
-      <Flex height="100vh" bgColor="#0066ff" justify="center" align="center">
+      <Flex
+        height="100vh"
+        bgGradient="linear(to-b, #0066ff, #d42bbd)"
+        justify="center"
+        align="center"
+      >
         <Spinner color="white"></Spinner>
       </Flex>
     );
