@@ -1,13 +1,15 @@
-import { useState } from "react";
-import WeatherDisplay from "./WeatherDisplay";
-import { Flex } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { BiCurrentLocation } from "react-icons/bi";
+import CurrentWeatherDisplay from "./CurrentWeatherDisplay";
+import axios from "axios";
+import { Flex, IconButton, Spinner } from "@chakra-ui/react";
+import About from "./About";
 
 function App() {
   const [location, setLocation] = useState({
     longitude: null,
     latitude: null,
   });
-
   const getUserLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLocation({
@@ -17,21 +19,79 @@ function App() {
     });
   };
 
+  const [isLoading, setLoading] = useState(true);
+  const [weather, setWeather] = useState({
+    cityName: null,
+    current: null,
+  });
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchData = async () => {
+      const headers = location.latitude &&
+        location.longitude && {
+          headers: {
+            Latitude: location.latitude,
+            Longitude: location.longitude,
+          },
+        };
+      const result = await axios(
+        process.env.REACT_APP_WEATHER_ENDPOINT,
+        headers
+      );
+
+      // TODO: add error state
+      const newWeather = {
+        cityName: result.data.cityName,
+        current: result.data.current,
+      };
+
+      setWeather(newWeather);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [location]);
+
+  if (isLoading) {
+    return (
+      <Flex height="100vh" bgColor="#0066ff" justify="center" align="center">
+        <Spinner color="white"></Spinner>
+      </Flex>
+    );
+  }
+
   // TODO: Add different background images
   return (
     <Flex
-      justify="center"
-      align="center"
+      padding="1em"
+      align="flex-start"
       height="100vh"
-      bgColor="#1E90FF"
+      bgGradient="linear(to-b, #0066ff, #d42bbd)"
       bgPos="center"
       bgSize="cover"
     >
-      <WeatherDisplay
-        latitude={location.latitude}
-        longitude={location.longitude}
+      <CurrentWeatherDisplay
+        cityName={weather.cityName}
+        weather={weather.current}
         onGetCurrentLocation={getUserLocation}
       />
+
+      <IconButton
+        position="fixed"
+        right="1em"
+        top="1em"
+        w={[10, 10, 10, 100]}
+        h={[10, 10, 10, 100]}
+        color="white"
+        variant="outline"
+        aria-label="Get current location"
+        icon={<BiCurrentLocation />}
+        onClick={getUserLocation}
+        visibility={"geolocation" in navigator ? null : "hidden"}
+      />
+
+      <About />
     </Flex>
   );
 }
