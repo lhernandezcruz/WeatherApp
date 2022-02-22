@@ -68,7 +68,7 @@ public class WeatherProxy {
     if (latitude == null || longitude == null) {
       CompletionStage<WeatherApiResponse> locationWeatherFuture = ipapiService.getLocation(ipService.getIpAddress(request)).thenCompose(ipInformation -> {
         String location = String.format(CITY_LOCATION_FORMAT, ipInformation.getCity(), ipInformation.getRegionCode(), ipInformation.getCountryCode());
-        return weatherApiService.getWeather(location, 5, weatherApiKey);
+        return weatherApiService.getWeather(location, 3, weatherApiKey);
       });
 
       return locationWeatherFuture.thenApply(weatherApiResponse -> Response.ok().entity(AppWeatherResponse.fromWeatherApi(weatherApiResponse)).build());
@@ -77,7 +77,7 @@ public class WeatherProxy {
     // get the city and weather using different providers for better accuracy
     CompletableFuture<LocationIqResponse> locationIqFuture = locationIqService.getLocation(locationIqApiKey, latitude, longitude, "json").toCompletableFuture();
     String location = String.format(COORDINATES_LOCATION_FORMAT, latitude, longitude);
-    CompletableFuture<WeatherApiResponse> weatherApiFuture = weatherApiService.getWeather(location, 5, weatherApiKey).toCompletableFuture();
+    CompletableFuture<WeatherApiResponse> weatherApiFuture = weatherApiService.getWeather(location, 3, weatherApiKey).toCompletableFuture();
 
     return CompletableFuture.allOf(locationIqFuture, weatherApiFuture).thenApplyAsync(dummy -> {
       LocationIqResponse locationIqResponse = locationIqFuture.join();
