@@ -21,15 +21,17 @@ public class AppWeatherResponse {
     int temperature;
     String text;
     int iconCode;
+    boolean isDaytime;
 
     public Description() {
 
     }
 
-    public Description(int temperature, String text, int iconCode) {
+    public Description(int temperature, String text, int iconCode, boolean isDaytime) {
       this.temperature = temperature;
       this.text = text;
       this.iconCode = iconCode;
+      this.isDaytime = isDaytime;
     }
 
     public int getTemperature() {
@@ -55,6 +57,14 @@ public class AppWeatherResponse {
     public void setIconCode(int iconCode) {
       this.iconCode = iconCode;
     }
+
+    public boolean isDaytime() {
+      return isDaytime;
+    }
+
+    public void setDaytime(boolean isDaytime) {
+      this.isDaytime = isDaytime;
+    }
   }
 
   @RegisterForReflection
@@ -67,9 +77,9 @@ public class AppWeatherResponse {
 
     }
 
-    public Hour(int time, int temperature, String text, int iconCode) {
+    public Hour(int time, int temperature, String text, int iconCode, boolean isDaytime) {
       this.time = time;
-      this.description = new Description(temperature, text, iconCode);
+      this.description = new Description(temperature, text, iconCode, isDaytime);
     }
 
     public int getTime() {
@@ -93,7 +103,8 @@ public class AppWeatherResponse {
           hour.getTimeEpoch(),
           hour.getTemperature().intValue(),
           hour.getCondition().getText(),
-          hour.getCondition().getCode());
+          hour.getCondition().getCode(),
+          hour.isDaytime());
     }
   }
 
@@ -107,9 +118,9 @@ public class AppWeatherResponse {
 
   }
 
-  public AppWeatherResponse(String cityName, int temperature, String description, int icon) {
+  public AppWeatherResponse(String cityName, int temperature, String description, int icon, boolean isDaytime) {
     this.cityName = cityName;
-    this.description = new Description(temperature, description, icon);
+    this.description = new Description(temperature, description, icon, isDaytime);
   }
 
   public String getCityName() {
@@ -148,12 +159,8 @@ public class AppWeatherResponse {
   public static AppWeatherResponse fromLocationIqAndWeatherApi(LocationIqResponse locationIqResponse,
       WeatherApiResponse weatherApiResponse) {
 
-    AppWeatherResponse appWeatherResponse = new AppWeatherResponse(
-        locationIqResponse.getAddress().getCity(),
-        weatherApiResponse.getCurrent().getTemperature().intValue(),
-        weatherApiResponse.getCurrent().getCondition().getText(),
-        weatherApiResponse.getCurrent().getCondition().getCode());
-    appWeatherResponse.setHourly(weatherApiResponse);
+    AppWeatherResponse appWeatherResponse = AppWeatherResponse.fromWeatherApi(weatherApiResponse);
+    appWeatherResponse.setCityName(locationIqResponse.getAddress().getCity());
     return appWeatherResponse;
   }
 
@@ -162,7 +169,8 @@ public class AppWeatherResponse {
         weatherApiResponse.getLocation().getName(),
         weatherApiResponse.getCurrent().getTemperature().intValue(),
         weatherApiResponse.getCurrent().getCondition().getText(),
-        weatherApiResponse.getCurrent().getCondition().getCode());
+        weatherApiResponse.getCurrent().getCondition().getCode(),
+        weatherApiResponse.getCurrent().isDaytime());
         appWeatherResponse.setHourly(weatherApiResponse);
     appWeatherResponse.setHourly(weatherApiResponse);
     return appWeatherResponse;
