@@ -4,6 +4,7 @@ import CurrentWeatherDisplay from "./CurrentWeatherDisplay";
 import axios from "axios";
 import { Flex, IconButton, Spinner } from "@chakra-ui/react";
 import About from "./About";
+import HourlyForecast from "./HourlyForecast";
 
 function App() {
   const [location, setLocation] = useState({
@@ -23,6 +24,7 @@ function App() {
   const [weather, setWeather] = useState({
     cityName: null,
     current: null,
+    hourly: null,
   });
 
   useEffect(() => {
@@ -44,6 +46,7 @@ function App() {
       const newWeather = {
         cityName: result.data.cityName,
         current: result.data.current,
+        hourly: result.data.hourly
       };
 
       setWeather(newWeather);
@@ -75,12 +78,18 @@ function App() {
       bgGradient="linear(to-b, #0066ff, #d42bbd)"
       bgPos="center"
       bgSize="cover"
+      color="white"
+      flexDirection="column"
+      maxWidth="100vw"
+      overflow="hidden"
     >
       <CurrentWeatherDisplay
         cityName={weather.cityName}
         weather={weather.current}
         onGetCurrentLocation={getUserLocation}
       />
+
+      <HourlyForecast hourlyForecast={weather.hourly} />
 
       <IconButton
         position="fixed"
