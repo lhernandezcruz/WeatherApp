@@ -1,6 +1,6 @@
 import CurrentLocation from "./CurrentLocation";
 import { Flex, Text, Icon } from "@chakra-ui/react";
-import { WiThermometer } from "react-icons/wi";
+import getWeatherIcon from "./IconMapping";
 
 const CurrentWeatherDisplay = (props) => {
   return (
@@ -14,10 +14,10 @@ const CurrentWeatherDisplay = (props) => {
       width={["100vw", "100vw", "100vw"]}
     >
       <CurrentLocation cityName={props.cityName} />
-      <Flex flexDirection="column" align="start">
-        <Flex flexDirection="row" align="flex-end" justify="flex-start">
-          <Icon as={WiThermometer} w={8} h={10}></Icon>
-          <Text fontSize="3xl">{props.weather.text}</Text>
+      <Flex flexDirection="column" alignItems="flex-start">
+        <Flex flexDirection="row" alignItems="center">
+          <Icon as={getWeatherIcon(props.weather.daytime, props.weather.iconCode)} boxSize={10}></Icon>
+          <Text fontSize="2xl">{props.weather.text}</Text>
         </Flex>
         <Text fontSize="6xl">{props.weather.temperature}&deg;F</Text>
       </Flex>

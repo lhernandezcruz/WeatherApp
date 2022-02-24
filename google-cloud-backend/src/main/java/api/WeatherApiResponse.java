@@ -51,6 +51,9 @@ public class WeatherApiResponse {
       @JsonProperty("temp_f")
       Double temperature;
 
+      @JsonProperty("is_day")
+      boolean isDaytime;
+
       Condition condition;
 
       public Double getTemperature() {
@@ -59,6 +62,14 @@ public class WeatherApiResponse {
 
       public void setTemperature(Double temperature) {
         this.temperature = temperature;
+      }
+
+      public boolean isDaytime() {
+        return isDaytime;
+      }
+
+      public void setDaytime(boolean isDaytime) {
+        this.isDaytime = isDaytime;
       }
 
       public Condition getCondition() {
@@ -77,6 +88,9 @@ public class WeatherApiResponse {
       @JsonProperty("temp_f")
       Double temperature;
 
+      @JsonProperty("is_day")
+      boolean isDaytime;
+
       Condition condition;
 
       public int getTimeEpoch() {
@@ -93,6 +107,14 @@ public class WeatherApiResponse {
 
       public void setTemperature(Double temperature) {
         this.temperature = temperature;
+      }
+
+      public boolean isDaytime() {
+        return isDaytime;
+      }
+
+      public void setDaytime(boolean isDaytime) {
+        this.isDaytime = isDaytime;
       }
 
       public Condition getCondition() {
