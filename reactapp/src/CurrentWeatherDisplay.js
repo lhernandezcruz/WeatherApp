@@ -5,11 +5,9 @@ import getWeatherIcon from "./IconMapping";
 const CurrentWeatherDisplay = (props) => {
   return (
     <Flex
-      backgroundSize="contain"
-      textAlign="center"
       flexDirection="column"
       justifyContent="space-between"
-      height={["85vh", "85vh", "80vh", "50vh"]}
+      flexBasis="60%"
       width={["100vw", "100vw", "100vw"]}
     >
       <CurrentLocation cityName={props.cityName} />
@@ -18,7 +16,7 @@ const CurrentWeatherDisplay = (props) => {
           <Icon as={getWeatherIcon(props.weather.daytime, props.weather.iconCode)} boxSize={10}></Icon>
           <Text fontSize="2xl">{props.weather.text}</Text>
         </Flex>
-        <Text fontSize="6xl">{props.weather.temperature}&deg;F</Text>
+        <Text fontSize={["4xl", "5xl", "6xl"]}>{props.weather.temperature}&deg;F</Text>
       </Flex>
     </Flex>
   );

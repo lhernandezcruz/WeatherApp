@@ -82,6 +82,7 @@ function App() {
       flexDirection="column"
       maxWidth="100vw"
       overflowX="hidden"
+      justifyContent="space-around"
     >
       <CurrentWeatherDisplay
         cityName={weather.cityName}
@@ -90,6 +91,7 @@ function App() {
       />
 
       <HourlyForecast hourlyForecast={weather.hourly} />
+      <About />
 
       <IconButton
         position="fixed"
@@ -104,8 +106,6 @@ function App() {
         onClick={getUserLocation}
         visibility={"geolocation" in navigator ? null : "hidden"}
       />
-
-      <About />
     </Flex>
   );
 }
