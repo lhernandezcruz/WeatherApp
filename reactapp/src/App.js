@@ -81,7 +81,7 @@ function App() {
       color="white"
       flexDirection="column"
       maxWidth="100vw"
-      overflow="hidden"
+      overflowX="hidden"
     >
       <CurrentWeatherDisplay
         cityName={weather.cityName}
