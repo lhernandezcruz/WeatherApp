@@ -2,7 +2,7 @@ import { Flex, Text, Link } from "@chakra-ui/react";
 
 export default () => {
   return (
-    <Flex flexDir="row" align="flex-start" position="fixed" bottom="1em" left="1em">
+    <Flex flexDir="row" alignSelf="flex-end">
       <Text fontSize="2xs">
         <Link
           href="https://github.com/lhernandezcruz/WeatherApp"
@@ -10,7 +10,7 @@ export default () => {
           textDecoration="underline"
           paddingRight="5px"
         >
-          Source Code
+          Code
         </Link>
       </Text>
       <Text fontSize="2xs" color="gray.100">

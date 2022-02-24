@@ -7,7 +7,6 @@ const CurrentWeatherDisplay = (props) => {
     <Flex
       backgroundSize="contain"
       textAlign="center"
-      color="white"
       flexDirection="column"
       justifyContent="space-between"
       height={["85vh", "85vh", "80vh", "50vh"]}
