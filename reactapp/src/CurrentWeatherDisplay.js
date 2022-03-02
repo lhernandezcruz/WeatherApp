@@ -18,7 +18,7 @@ const CurrentWeatherDisplay = (props) => {
           <Icon as={getWeatherIcon(props.weather.daytime, props.weather.iconCode)} boxSize={10}></Icon>
           <Text fontSize="2xl">{props.weather.text}</Text>
         </Flex>
-        <Text fontSize="6xl">{props.weather.temperature}&deg;F</Text>
+        <Text fontSize={["5xl", "5xl", "6xl"]}>{props.weather.temperature}&deg;F</Text>
       </Flex>
     </Flex>
   );
