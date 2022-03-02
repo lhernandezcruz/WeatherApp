@@ -101,3 +101,11 @@ export const NIGHT_CODE_TO_ICON = {
   1279:  WiNightSnowThunderstorm, //Patchy light snow with thunder
   1282:  WiNightSnowThunderstorm, //Moderate or heavy snow with thunder
 }
+
+export const COLD_WEATHER_GRADIENT = ['#20667d', '#2c5875'];
+export const WARM_WEATHER_MIN = 55;
+export const WARM_WEATHER_GRADIENT = ['#20667d', '#391E94'];
+export const HOT_WEATHER_MIN = 90;
+export const HOT_WEATHER_GRADIENT = ['#fb9e00', '#fe3f02'];
+export const SUPER_HOT_WEATHER_MIN = 100;
+export const SUPER_HOT_WEATHER_GRADIENT = ['#bd1816 ', '#bd1816'];

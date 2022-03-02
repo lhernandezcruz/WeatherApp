@@ -5,6 +5,22 @@ import axios from "axios";
 import { Flex, IconButton, Spinner } from "@chakra-ui/react";
 import About from "./About";
 import HourlyForecast from "./HourlyForecast";
+import { COLD_WEATHER_GRADIENT, WARM_WEATHER_MIN, WARM_WEATHER_GRADIENT, HOT_WEATHER_MIN, HOT_WEATHER_GRADIENT, SUPER_HOT_WEATHER_GRADIENT, SUPER_HOT_WEATHER_MIN } from './Constants';
+
+const linearGradient = (colorValues) => {
+  return `linear(to-b, ${colorValues[0]}, ${colorValues[1]})`;
+}
+
+const getBackgroundGradient = (temperature) => {
+  if (temperature >= SUPER_HOT_WEATHER_MIN) {
+    return linearGradient(SUPER_HOT_WEATHER_GRADIENT);
+  } else if (temperature >= HOT_WEATHER_MIN) {
+    return linearGradient(HOT_WEATHER_GRADIENT);
+  } else if (temperature >= WARM_WEATHER_MIN) {
+    return linearGradient(WARM_WEATHER_GRADIENT);
+  }
+  return linearGradient(COLD_WEATHER_GRADIENT);
+};
 
 function App() {
   const [location, setLocation] = useState({
@@ -22,9 +38,19 @@ function App() {
 
   const [isLoading, setLoading] = useState(true);
   const [weather, setWeather] = useState({
-    cityName: null,
-    current: null,
-    hourly: null,
+    cityName: "Some city",
+    current: {
+      temperature: 60,
+      text: "Clear",
+      iconCode: 1000,
+      daytime: false,
+    },
+    hourly: Array(24).fill({
+      time: Math.round(Date.now() / 1000),
+      temperature: 60,
+      iconCode: 1000,
+      daytime: false,
+    }),
   });
 
   useEffect(() => {
@@ -46,7 +72,7 @@ function App() {
       const newWeather = {
         cityName: result.data.cityName,
         current: result.data.current,
-        hourly: result.data.hourly
+        hourly: result.data.hourly,
       };
 
       setWeather(newWeather);
@@ -56,32 +82,19 @@ function App() {
     fetchData();
   }, [location]);
 
-  if (isLoading) {
-    return (
-      <Flex
-        height="100vh"
-        bgGradient="linear(to-b, #0066ff, #d42bbd)"
-        justify="center"
-        align="center"
-      >
-        <Spinner color="white"></Spinner>
-      </Flex>
-    );
-  }
-
-  // TODO: Add different background images
   return (
     <Flex
       padding="1em"
       align="flex-start"
       height="100vh"
-      bgGradient="linear(to-b, #0066ff, #d42bbd)"
+      bgGradient={getBackgroundGradient(weather.current.temperature)}
       bgPos="center"
       bgSize="cover"
       color="white"
       flexDirection="column"
       maxWidth="100vw"
       overflowX="hidden"
+      justifyContent="center"
     >
       <CurrentWeatherDisplay
         cityName={weather.cityName}
@@ -106,6 +119,13 @@ function App() {
       />
 
       <About />
+      {isLoading ? (
+        <Spinner
+          color="white"
+          alignSelf="center"
+          position={"fixed"}
+        />
+      ) : null}
     </Flex>
   );
 }

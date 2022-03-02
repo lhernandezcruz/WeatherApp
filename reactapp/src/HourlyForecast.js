@@ -1,5 +1,4 @@
-import { Flex, Icon, Text, Box, propNames } from "@chakra-ui/react";
-import { WiRain } from "react-icons/wi";
+import { Flex, Icon, Text } from "@chakra-ui/react";
 import getWeatherIcon from "./IconMapping";
 
 const HourlyForecast = (props) => {
@@ -13,6 +12,8 @@ const HourlyForecast = (props) => {
     indexOfCurrentHour,
     indexOfCurrentHour + 24
   );
+  console.log(props.hourlyForecast);
+  console.log(indexOfCurrentHour);
   return (
     <Flex flexDirection="column" borderTop={"1px"} borderColor={"gray.100"}>
       <Text fontSize={"2xl"}>Forecast</Text>
@@ -25,7 +26,7 @@ const HourlyForecast = (props) => {
         justifyContent="space-between"
         gap="2rem"
       >
-        {hourlyForecast.map((hourlyForecast) => {
+        {hourlyForecast.map((hourlyForecast, index) => {
           const hourTime = new Date(hourlyForecast.time * 1000);
           const options = {
             hour: "numeric",
@@ -33,7 +34,7 @@ const HourlyForecast = (props) => {
           return (
             <Flex
               flexDirection="column"
-              key={hourlyForecast.time}
+              key={hourlyForecast.time + index}
               alignItems="center"
               borderColor="gray.100"
               borderWidth="1px"
