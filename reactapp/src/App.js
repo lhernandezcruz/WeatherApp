@@ -59,8 +59,8 @@ function App() {
       const headers = location.latitude &&
         location.longitude && {
           headers: {
-            Latitude: 47.4456025,
-            Longitude: -122.3005672,
+            Latitude: location.latitude,
+            Longitude: location.longitude,
           },
         };
       const result = await axios(
