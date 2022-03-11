@@ -12,8 +12,6 @@ const HourlyForecast = (props) => {
     indexOfCurrentHour,
     indexOfCurrentHour + 24
   );
-  console.log(props.hourlyForecast);
-  console.log(indexOfCurrentHour);
   return (
     <Flex flexDirection="column" borderTop={"1px"} borderColor={"gray.100"}>
       <Text fontSize={"2xl"}>Forecast</Text>
