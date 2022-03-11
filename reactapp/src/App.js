@@ -38,7 +38,7 @@ function App() {
 
   const [isLoading, setLoading] = useState(true);
   const [weather, setWeather] = useState({
-    cityName: "Some city",
+    locationName: "Some city",
     current: {
       temperature: 60,
       text: "Clear",
@@ -59,8 +59,8 @@ function App() {
       const headers = location.latitude &&
         location.longitude && {
           headers: {
-            Latitude: location.latitude,
-            Longitude: location.longitude,
+            Latitude: 47.4456025,
+            Longitude: -122.3005672,
           },
         };
       const result = await axios(
@@ -70,7 +70,7 @@ function App() {
 
       // TODO: add error state
       const newWeather = {
-        cityName: result.data.cityName,
+        locationName: result.data.locationName,
         current: result.data.current,
         hourly: result.data.hourly,
       };
@@ -97,7 +97,7 @@ function App() {
       justifyContent="center"
     >
       <CurrentWeatherDisplay
-        cityName={weather.cityName}
+        locationName={weather.locationName}
         weather={weather.current}
         onGetCurrentLocation={getUserLocation}
       />

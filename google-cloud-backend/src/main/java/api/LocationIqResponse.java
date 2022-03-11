@@ -1,15 +1,18 @@
 package api;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class LocationIqResponse {
   public class Address {
-    String city;
+    @JsonAlias({"city", "town", "village", "suburb"})
+    String location;
 
-    public String getCity() {
-      return city;
+    public String getLocation() {
+      return location;
     }
 
-    public void setCity(String city) {
-      this.city = city;
+    public void steLocation(String location) {
+      this.location = location;
     }
   }
 

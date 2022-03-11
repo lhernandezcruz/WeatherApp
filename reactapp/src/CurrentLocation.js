@@ -13,7 +13,7 @@ export default (props) => {
   return (
     <Flex flexDir="column" align="flex-start">
       <Text fontSize={["4xl", "5xl"]} paddingRight="0.5em">
-        {props.cityName}
+        {props.locationName}
       </Text>
       <Text fontSize={["1xl", "2xl"]}>
         {currentDate.toLocaleDateString(undefined, options)}

@@ -108,7 +108,7 @@ public class AppWeatherResponse {
     }
   }
 
-  String cityName;
+  String locationName;
 
   @JsonProperty("current")
   Description description;
@@ -118,17 +118,17 @@ public class AppWeatherResponse {
 
   }
 
-  public AppWeatherResponse(String cityName, int temperature, String description, int icon, boolean isDaytime) {
-    this.cityName = cityName;
+  public AppWeatherResponse(String locationName, int temperature, String description, int icon, boolean isDaytime) {
+    this.locationName = locationName;
     this.description = new Description(temperature, description, icon, isDaytime);
   }
 
-  public String getCityName() {
-    return cityName;
+  public String getLocationName() {
+    return locationName;
   }
 
-  public void setCityName(String cityName) {
-    this.cityName = cityName;
+  public void setLocationName(String locationName) {
+    this.locationName = locationName;
   }
 
   public Description getDescription() {
@@ -160,7 +160,7 @@ public class AppWeatherResponse {
       WeatherApiResponse weatherApiResponse) {
 
     AppWeatherResponse appWeatherResponse = AppWeatherResponse.fromWeatherApi(weatherApiResponse);
-    appWeatherResponse.setCityName(locationIqResponse.getAddress().getCity());
+    appWeatherResponse.setLocationName(locationIqResponse.getAddress().getLocation());
     return appWeatherResponse;
   }
 
