@@ -1,6 +1,9 @@
 import { Flex, Text } from "@chakra-ui/react";
+import { useContext } from "react";
+import WeatherContext from "../WeatherContext";
 
-export default (props) => {
+const CurrentLocation = () => {
+  const { locationName } = useContext(WeatherContext);
   const currentDate = new Date(Date.now());
   const options = {
     year: "numeric",
@@ -13,7 +16,7 @@ export default (props) => {
   return (
     <Flex flexDir="column" align="flex-start">
       <Text fontSize={["4xl", "5xl"]} paddingRight="0.5em">
-        {props.locationName}
+        {locationName}
       </Text>
       <Text fontSize={["1xl", "2xl"]}>
         {currentDate.toLocaleDateString(undefined, options)}
@@ -21,3 +24,5 @@ export default (props) => {
     </Flex>
   );
 };
+
+export default CurrentLocation;

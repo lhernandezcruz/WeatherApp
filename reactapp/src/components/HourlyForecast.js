@@ -1,14 +1,17 @@
 import { Flex, Icon, Text } from "@chakra-ui/react";
-import getWeatherIcon from "./IconMapping";
+import { useContext } from "react";
+import getWeatherIcon from "../util/IconMapping";
+import WeatherContext from "../WeatherContext";
 
-const HourlyForecast = (props) => {
+const HourlyForecast = () => {
+  const { hourly: fullHourlyForecast } = useContext(WeatherContext);
   // find index of the current time and only show next 24 hours forecast
   const currentHour = new Date(Date.now()).getHours();
-  const indexOfCurrentHour = props.hourlyForecast.findIndex((hourForecast) => {
+  const indexOfCurrentHour = fullHourlyForecast.findIndex((hourForecast) => {
     const forecastHour = new Date(hourForecast.time * 1000).getHours();
     return currentHour === forecastHour;
   });
-  const hourlyForecast = props.hourlyForecast.slice(
+  const hourlyForecast = fullHourlyForecast.slice(
     indexOfCurrentHour,
     indexOfCurrentHour + 24
   );
