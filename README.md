@@ -2,7 +2,7 @@
 
 A web app that gets the weather at your current location and displays it in a simplified manner. [Try Now](https://weather.lhernandezcruz.com).
 
-<img src="screenshots/weatherInfo.png" height="450px">
+<img src="screenshots/weatherInfo.PNG" height="450px">
 
 ## Usage
 
