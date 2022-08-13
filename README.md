@@ -2,15 +2,17 @@
 
 A web app that gets the weather at your current location and displays it in a simplified manner. [Try Now](https://weather.lhernandezcruz.com).
 
-![Screenshot](screenshots/weatherInfo.PNG)
+<img src="screenshots/weatherInfo.png" height="450px">
 
 ## Usage
 
-The initial location is set to Mountain View, CA but clicking the current location icon will update the weather based on the location provided by the web browser.
+The initial location is retrieved using the ip address but clicking the current location icon will update the weather based on the location provided by the web browser.
 
 ## Built With
 * [Geolocation Web APIs](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation) - Web Browser API that prompts user for location
-* [OpenWeatherMap](https://www.openweathermap.org) - Provides weather information
+* [ipapi](https://ipapi.co/) - Provides approximation of location given user IP address
+* [Location IQ](https://locationiq.com) - Provides city given coordinates for more accurate data
+* [Weather API](https://www.weatherapi.com/) - Provides weather information
 * [React](https://reactjs.org/) - JS library for building web interfaces
 * [Chakra UI](https://reactjs.org/) - Component library for simplified styling
 
