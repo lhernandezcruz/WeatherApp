@@ -1,8 +1,11 @@
 import CurrentLocation from "./CurrentLocation";
 import { Flex, Text, Icon } from "@chakra-ui/react";
-import getWeatherIcon from "./IconMapping";
+import getWeatherIcon from "../util/IconMapping";
+import WeatherContext from "../WeatherContext";
+import { useContext } from "react";
 
-const CurrentWeatherDisplay = (props) => {
+const CurrentWeatherDisplay = () => {
+  const { current } = useContext(WeatherContext);
   return (
     <Flex
       backgroundSize="contain"
@@ -12,13 +15,13 @@ const CurrentWeatherDisplay = (props) => {
       height={["85vh", "85vh", "80vh", "50vh"]}
       width={["100vw", "100vw", "100vw"]}
     >
-      <CurrentLocation locationName={props.locationName} />
+      <CurrentLocation />
       <Flex flexDirection="column" alignItems="flex-start">
         <Flex flexDirection="row" alignItems="center">
-          <Icon as={getWeatherIcon(props.weather.daytime, props.weather.iconCode)} boxSize={10}></Icon>
-          <Text fontSize="2xl">{props.weather.text}</Text>
+          <Icon as={getWeatherIcon(current.daytime, current.iconCode)} boxSize={10}></Icon>
+          <Text fontSize="2xl">{current.text}</Text>
         </Flex>
-        <Text fontSize={["5xl", "5xl", "6xl"]}>{props.weather.temperature}&deg;F</Text>
+        <Text fontSize={["5xl", "5xl", "6xl"]}>{current.temperature}&deg;F</Text>
       </Flex>
     </Flex>
   );
