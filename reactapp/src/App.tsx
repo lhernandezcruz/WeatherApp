@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { BiCurrentLocation } from "react-icons/bi";
-import CurrentWeatherDisplay from "./components/CurrentWeatherDisplay";
+import CurrentWeatherDisplay from "./components/CurrentWeatherDisplay.tsx";
 import { Flex, IconButton, Spinner } from "@chakra-ui/react";
-import About from "./components/About";
-import HourlyForecast from "./components/HourlyForecast";
+import About from "./components/About.tsx";
+import HourlyForecast from "./components/HourlyForecast.tsx";
 import {
   COLD_WEATHER_GRADIENT,
   WARM_WEATHER_MIN,
@@ -12,15 +12,15 @@ import {
   HOT_WEATHER_GRADIENT,
   SUPER_HOT_WEATHER_GRADIENT,
   SUPER_HOT_WEATHER_MIN,
-} from "./util/Constants";
-import { fetchWeather } from './api/ApiClient';
-import WeatherContext from "./WeatherContext";
+} from "./util/Constants.tsx";
+import { fetchWeather, Location } from './api/ApiClient.tsx';
+import WeatherContext, { defaultWeatherForecast } from "./WeatherContext.tsx";
 
-const linearGradient = (colorValues) => {
+const linearGradient = (colorValues: [number, number]) => {
   return `linear(to-b, ${colorValues[0]}, ${colorValues[1]})`;
 };
 
-const getBackgroundGradient = (temperature) => {
+const getBackgroundGradient = (temperature: number) => {
   if (temperature >= SUPER_HOT_WEATHER_MIN) {
     return linearGradient(SUPER_HOT_WEATHER_GRADIENT);
   } else if (temperature >= HOT_WEATHER_MIN) {
@@ -33,7 +33,7 @@ const getBackgroundGradient = (temperature) => {
 
 function App() {
   const [isLoading, setLoading] = useState(true);
-  const [location, setLocation] = useState({
+  const [location, setLocation] = useState<Location>({
     longitude: null,
     latitude: null,
   });
@@ -45,21 +45,7 @@ function App() {
       });
     });
   };
-  const [weather, setWeather] = useState({
-    locationName: "Some city",
-    current: {
-      temperature: 60,
-      text: "Clear",
-      iconCode: 1000,
-      daytime: false,
-    },
-    hourly: Array(24).fill({
-      time: Math.round(Date.now() / 1000),
-      temperature: 60,
-      iconCode: 1000,
-      daytime: false,
-    }),
-  });
+  const [weather, setWeather] = useState(defaultWeatherForecast);
 
   useEffect(() => {
     setLoading(true);
