@@ -1,7 +1,6 @@
+import React, { useContext } from "react";
 import { Flex, Text } from "@chakra-ui/react";
-import { useContext } from "react";
-import { WeatherForecast } from "../WeatherContext";
-import WeatherContext from "../WeatherContext.tsx";
+import WeatherContext, { WeatherForecast } from "../WeatherContext";
 
 const CurrentLocation = () => {
   const { locationName } : WeatherForecast = useContext(WeatherContext);

@@ -1,6 +1,7 @@
+import React from "react";
 import { Flex, Text, Link } from "@chakra-ui/react";
 
-export default () => {
+const About = () => {
   return (
     <Flex flexDir="row" alignSelf="flex-end">
       <Text fontSize="2xs">
@@ -27,3 +28,5 @@ export default () => {
     </Flex>
   );
 };
+
+export default About;
