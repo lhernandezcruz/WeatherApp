@@ -1,7 +1,7 @@
-import { DAY_CODE_TO_ICON, NIGHT_CODE_TO_ICON } from './Constants';
+import { DAY_CODE_TO_ICON, NIGHT_CODE_TO_ICON } from './Constants.tsx';
 import { WiThermometer } from 'react-icons/wi';
 
-const getWeatherIcon = (isDay, iconCode) => {
+const getWeatherIcon = (isDay: boolean, iconCode: string) => {
   const icon = isDay ? DAY_CODE_TO_ICON[iconCode] : NIGHT_CODE_TO_ICON[iconCode];
   return icon || WiThermometer;
 }

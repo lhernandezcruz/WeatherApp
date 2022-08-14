@@ -1,20 +1,25 @@
 import { Flex, Icon, Text } from "@chakra-ui/react";
 import { useContext } from "react";
-import getWeatherIcon from "../util/IconMapping";
-import WeatherContext from "../WeatherContext";
+import getWeatherIcon from "../util/IconMapping.tsx";
+import { HourForecast, WeatherForecast } from "../WeatherContext";
+import WeatherContext from "../WeatherContext.tsx";
 
-const HourlyForecast = () => {
-  const { hourly: fullHourlyForecast } = useContext(WeatherContext);
+const getForecastForNextNHours = (fullHourlyForecast : Array<HourForecast>, totalHours: number) => {
   // find index of the current time and only show next 24 hours forecast
   const currentHour = new Date(Date.now()).getHours();
   const indexOfCurrentHour = fullHourlyForecast.findIndex((hourForecast) => {
     const forecastHour = new Date(hourForecast.time * 1000).getHours();
     return currentHour === forecastHour;
   });
-  const hourlyForecast = fullHourlyForecast.slice(
+  return fullHourlyForecast.slice(
     indexOfCurrentHour,
-    indexOfCurrentHour + 24
+    indexOfCurrentHour + totalHours
   );
+}
+const HourlyForecast = () => {
+  const { hourly: fullHourlyForecast }: WeatherForecast = useContext(WeatherContext);
+  const hourlyForecast24Hours = getForecastForNextNHours(fullHourlyForecast, 24);
+  
   return (
     <Flex flexDirection="column" borderTop={"1px"} borderColor={"gray.100"}>
       <Text fontSize={"2xl"}>Forecast</Text>
@@ -27,9 +32,9 @@ const HourlyForecast = () => {
         justifyContent="space-between"
         gap="2rem"
       >
-        {hourlyForecast.map((hourlyForecast, index) => {
+        {hourlyForecast24Hours.map((hourlyForecast, index) => {
           const hourTime = new Date(hourlyForecast.time * 1000);
-          const options = {
+          const options: Intl.DateTimeFormatOptions = {
             hour: "numeric",
           };
           return (
@@ -44,7 +49,7 @@ const HourlyForecast = () => {
               padding="1rem"
             >
               <Text fontSize="2xl" whiteSpace="nowrap">
-                {hourTime.toLocaleTimeString(undefined, options)}
+                {Intl.DateTimeFormat(undefined, options).format(hourTime)}
               </Text>
               <Icon
                 as={getWeatherIcon(

@@ -1,11 +1,16 @@
 import axios from "axios";
 
-export const fetchWeather =async (location) => {
+export interface Location {
+  latitude?: number,
+  longitude?: number
+}
+
+export const fetchWeather =async (location: Location) => {
   const headers = location.latitude &&
     location.longitude && {
       headers: {
-        Latitude: location.latitude,
-        Longitude: location.longitude,
+        Latitude: location.latitude.toString(),
+        Longitude: location.longitude.toString(),
       },
     };
   const result = await axios(process.env.REACT_APP_WEATHER_ENDPOINT, headers);

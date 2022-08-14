@@ -1,11 +1,11 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { useContext } from "react";
-import WeatherContext from "../WeatherContext";
+import { WeatherForecast } from "../WeatherContext";
+import WeatherContext from "../WeatherContext.tsx";
 
 const CurrentLocation = () => {
-  const { locationName } = useContext(WeatherContext);
-  const currentDate = new Date(Date.now());
-  const options = {
+  const { locationName } : WeatherForecast = useContext(WeatherContext);
+  const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -19,7 +19,7 @@ const CurrentLocation = () => {
         {locationName}
       </Text>
       <Text fontSize={["1xl", "2xl"]}>
-        {currentDate.toLocaleDateString(undefined, options)}
+        {Intl.DateTimeFormat(undefined, options).format(Date.now())}
       </Text>
     </Flex>
   );
