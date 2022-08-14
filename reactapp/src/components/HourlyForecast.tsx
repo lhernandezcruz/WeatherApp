@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import getWeatherIcon from "../util/IconMapping";
 import WeatherContext, { HourForecast, WeatherForecast } from "../WeatherContext";
+import HourlyForecastV2 from "./HourlyForecastV2";
 
 const getForecastForNextNHours = (fullHourlyForecast : Array<HourForecast>, totalHours: number) => {
   // find index of the current time and only show next 24 hours forecast
@@ -22,7 +23,11 @@ const HourlyForecast = () => {
   return (
     <Flex flexDirection="column" borderTop={"1px"} borderColor={"gray.100"}>
       <Text fontSize={"2xl"}>Forecast</Text>
+      <Box maxWidth={["90vw", "95vw"]} >
+        <HourlyForecastV2></HourlyForecastV2>
+      </Box>
       <Flex
+        display="none"
         flexDirection="row"
         overflowX="scroll"
         maxWidth={["90vw", "95vw"]}

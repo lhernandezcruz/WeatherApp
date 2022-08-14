@@ -15,6 +15,7 @@ import {
 } from "./util/Constants";
 import { fetchWeather, Location } from './api/ApiClient';
 import WeatherContext, { defaultWeatherForecast } from "./WeatherContext";
+import HourlyForecastV2 from "./components/HourlyForecastV2";
 
 const linearGradient = (colorValues: [string, string]) => {
   return `linear(to-b, ${colorValues[0]}, ${colorValues[1]})`;
