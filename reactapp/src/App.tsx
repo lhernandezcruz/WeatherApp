@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BiCurrentLocation } from "react-icons/bi";
-import CurrentWeatherDisplay from "./components/CurrentWeatherDisplay.tsx";
+import CurrentWeatherDisplay from "./components/CurrentWeatherDisplay";
 import { Flex, IconButton, Spinner } from "@chakra-ui/react";
-import About from "./components/About.tsx";
-import HourlyForecast from "./components/HourlyForecast.tsx";
+import About from "./components/About";
+import HourlyForecast from "./components/HourlyForecast";
 import {
   COLD_WEATHER_GRADIENT,
   WARM_WEATHER_MIN,
@@ -12,11 +12,11 @@ import {
   HOT_WEATHER_GRADIENT,
   SUPER_HOT_WEATHER_GRADIENT,
   SUPER_HOT_WEATHER_MIN,
-} from "./util/Constants.tsx";
-import { fetchWeather, Location } from './api/ApiClient.tsx';
-import WeatherContext, { defaultWeatherForecast } from "./WeatherContext.tsx";
+} from "./util/Constants";
+import { fetchWeather, Location } from './api/ApiClient';
+import WeatherContext, { defaultWeatherForecast } from "./WeatherContext";
 
-const linearGradient = (colorValues: [number, number]) => {
+const linearGradient = (colorValues: [string, string]) => {
   return `linear(to-b, ${colorValues[0]}, ${colorValues[1]})`;
 };
 
@@ -33,10 +33,7 @@ const getBackgroundGradient = (temperature: number) => {
 
 function App() {
   const [isLoading, setLoading] = useState(true);
-  const [location, setLocation] = useState<Location>({
-    longitude: null,
-    latitude: null,
-  });
+  const [location, setLocation] = useState<Location>({});
   const getUserLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLocation({
@@ -85,7 +82,7 @@ function App() {
           aria-label="Get current location"
           icon={<BiCurrentLocation />}
           onClick={getUserLocation}
-          visibility={"geolocation" in navigator ? null : "hidden"}
+          hidden={!("geolocation" in navigator)}
         />
 
         <About />

@@ -1,8 +1,7 @@
+import React, { useContext } from "react";
 import { Flex, Icon, Text } from "@chakra-ui/react";
-import { useContext } from "react";
-import getWeatherIcon from "../util/IconMapping.tsx";
-import { HourForecast, WeatherForecast } from "../WeatherContext";
-import WeatherContext from "../WeatherContext.tsx";
+import getWeatherIcon from "../util/IconMapping";
+import WeatherContext, { HourForecast, WeatherForecast } from "../WeatherContext";
 
 const getForecastForNextNHours = (fullHourlyForecast : Array<HourForecast>, totalHours: number) => {
   // find index of the current time and only show next 24 hours forecast

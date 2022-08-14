@@ -1,9 +1,8 @@
-import CurrentLocation from "./CurrentLocation.tsx";
+import React, { useContext } from "react";
+import CurrentLocation from "./CurrentLocation";
 import { Flex, Text, Icon } from "@chakra-ui/react";
-import getWeatherIcon from "../util/IconMapping.tsx";
-import WeatherContext from "../WeatherContext.tsx";
-import { useContext } from "react";
-import { WeatherForecast } from "../WeatherContext";
+import getWeatherIcon from "../util/IconMapping";
+import WeatherContext, { WeatherForecast } from "../WeatherContext";
 
 const CurrentWeatherDisplay = () => {
   const { current } : WeatherForecast = useContext(WeatherContext);
