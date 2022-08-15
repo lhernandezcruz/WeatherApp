@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BiCurrentLocation } from "react-icons/bi";
 import CurrentWeatherDisplay from "./components/CurrentWeatherDisplay";
-import { Flex, IconButton, Spinner } from "@chakra-ui/react";
+import { Box, Flex, IconButton, Spinner } from "@chakra-ui/react";
 import About from "./components/About";
 import HourlyForecast from "./components/HourlyForecast";
 import {
@@ -15,7 +15,7 @@ import {
 } from "./util/Constants";
 import { fetchWeather, Location } from './api/ApiClient';
 import WeatherContext, { defaultWeatherForecast } from "./WeatherContext";
-import HourlyForecastV2 from "./components/HourlyForecastV2";
+import CurrentLocation from "./components/CurrentLocation";
 
 const linearGradient = (colorValues: [string, string]) => {
   return `linear(to-b, ${colorValues[0]}, ${colorValues[1]})`;
@@ -56,10 +56,15 @@ function App() {
 
   return (
     <WeatherContext.Provider value={weather}>
+      {isLoading ? (
+        <Flex height="100%" width="100%" z-index="1" position="absolute" alignItems="center" justifyContent="center">
+          <Spinner color="white" />
+        </Flex>
+      ) : null}
       <Flex
         padding="1em"
         align="flex-start"
-        height="100vh"
+        height="100%"
         bgGradient={getBackgroundGradient(weather.current.temperature)}
         bgPos="center"
         bgSize="cover"
@@ -67,11 +72,8 @@ function App() {
         flexDirection="column"
         maxWidth="100vw"
         overflowX="hidden"
-        justifyContent="center"
+        justifyContent="space-between"
       >
-        <CurrentWeatherDisplay />
-        <HourlyForecast />
-
         <IconButton
           position="fixed"
           right="1em"
@@ -85,11 +87,14 @@ function App() {
           onClick={getUserLocation}
           hidden={!("geolocation" in navigator)}
         />
-
-        <About />
-        {isLoading ? (
-          <Spinner color="white" alignSelf="center" position={"fixed"} />
-        ) : null}
+        <CurrentLocation />
+        <Flex flexDirection="column" maxWidth="100%">
+          <CurrentWeatherDisplay />
+          <HourlyForecast />
+          <Box alignSelf="flex-start" maxWidth="100%" marginTop="1em">
+            <About />
+          </Box>
+        </Flex>
       </Flex>
     </WeatherContext.Provider>
   );

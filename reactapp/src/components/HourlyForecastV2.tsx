@@ -2,12 +2,12 @@ import { Box } from "@chakra-ui/react";
 import React from "react";
 import { useContext } from "react";
 import { getForecastForNextNHours } from "../util/WeatherUtils";
-// import VictoryBar from
 import WeatherContext from "../WeatherContext";
-import { Area, AreaChart, Bar, Label, LabelList, Rectangle, Text, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, LabelList, XAxis } from "recharts";
+import { ContentType } from "recharts/types/component/Label";
 
-// @ts-ignore
-const renderCustomizedLabel = (props) => {
+const renderCustomizedLabel : ContentType = (props) => {
+  // @ts-ignore
   const { x, y, index, value } = props;
   const radius = 15;
   if (index % 2 !== 0) {
@@ -15,11 +15,11 @@ const renderCustomizedLabel = (props) => {
   }
   return (
     <g>
-      <circle cx={x} cy={y} r={radius} fill="white" fillOpacity="0.1" />
+      <circle cx={x} cy={y} r={radius} fill="currentColor" fillOpacity="0.2" />
       <text
         x={x}
         y={y}
-        fill="#fff"
+        fill="currentColor"
         textAnchor="middle"
         dominantBaseline="middle"
       >
@@ -30,7 +30,6 @@ const renderCustomizedLabel = (props) => {
 };
 
 const HourlyForecastV2 = () => {
-  // VictoryBar
   const { hourly } = useContext(WeatherContext);
   const hourlyForecast24Hours = getForecastForNextNHours(hourly, 24);
   const data = hourlyForecast24Hours.map((hourForecast) => {
@@ -44,10 +43,10 @@ const HourlyForecastV2 = () => {
     }
   });
 
-  return <Box overflowX="scroll" height="100%" maxWidth={["90vw", "95vw"]} css={{scrollbarWidth: "thin", scrollbarColor: "white transparent"}}>
+  return <Box overflowX="scroll" height="100%" maxWidth="100%" css={{scrollbarWidth: "thin", scrollbarColor: "currentColor transparent"}}>
     <AreaChart style={{overflow: "visible"}} width={1000} height={125} data={data} margin={{ top: 15, right: 0, left: 20, bottom: 0 }}>
-      <XAxis interval={1} dataKey="hour" fill="white" />
-      <Area isAnimationActive={false} type="monotone" dataKey="temperature" stroke="#8884d8" fillOpacity="0.1">
+      <XAxis interval={1} dataKey="hour" tick={{ fill: 'currentColor' }}  />
+      <Area isAnimationActive={false} type="monotone" dataKey="temperature" stroke="currentColor" strokeOpacity="0.3" fillOpacity="0.1">
         <LabelList dataKey="temperature" position={"top"} content={renderCustomizedLabel} />
       </Area>
     </AreaChart>
