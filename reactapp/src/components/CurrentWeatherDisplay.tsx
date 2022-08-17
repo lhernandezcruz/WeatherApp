@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Flex, Text, Icon } from "@chakra-ui/react";
 import getWeatherIcon from "../util/IconMapping";
-import WeatherContext, { WeatherForecast } from "../WeatherContext";
+import { AppContext } from "../AppProvider";
 
 const CurrentWeatherDisplay = () => {
-  const { current }: WeatherForecast = useContext(WeatherContext);
+  const { weatherForecast } = useContext(AppContext);
+  const { current } = weatherForecast; 
   return (
     <Flex
       backgroundSize="contain"

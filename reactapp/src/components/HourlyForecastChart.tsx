@@ -2,9 +2,9 @@ import { Box } from "@chakra-ui/react";
 import React from "react";
 import { useContext } from "react";
 import { getForecastForNextNHours } from "../util/WeatherUtils";
-import WeatherContext from "../WeatherContext";
 import { Area, AreaChart, LabelList, XAxis } from "recharts";
 import { ContentType } from "recharts/types/component/Label";
+import { AppContext } from "../AppProvider";
 
 const renderCustomizedLabel: ContentType = (props) => {
   // @ts-ignore
@@ -30,7 +30,8 @@ const renderCustomizedLabel: ContentType = (props) => {
 };
 
 const HourlyForecastV2 = () => {
-  const { hourly } = useContext(WeatherContext);
+  const { weatherForecast } = useContext(AppContext);
+  const { hourly } = weatherForecast; 
   const hourlyForecast24Hours = getForecastForNextNHours(hourly, 24);
   const data = hourlyForecast24Hours.map((hourForecast) => {
     const hourTime = new Date(hourForecast.time * 1000);
