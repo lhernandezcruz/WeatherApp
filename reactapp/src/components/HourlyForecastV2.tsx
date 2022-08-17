@@ -6,7 +6,7 @@ import WeatherContext from "../WeatherContext";
 import { Area, AreaChart, LabelList, XAxis } from "recharts";
 import { ContentType } from "recharts/types/component/Label";
 
-const renderCustomizedLabel : ContentType = (props) => {
+const renderCustomizedLabel: ContentType = (props) => {
   // @ts-ignore
   const { x, y, index, value } = props;
   const radius = 15;
@@ -43,9 +43,23 @@ const HourlyForecastV2 = () => {
     }
   });
 
-  return <Box overflowX="scroll" height="100%" maxWidth="100%" css={{scrollbarWidth: "thin", scrollbarColor: "currentColor transparent"}}>
-    <AreaChart style={{overflow: "visible"}} width={1000} height={125} data={data} margin={{ top: 15, right: 0, left: 20, bottom: 0 }}>
-      <XAxis interval={1} dataKey="hour" tick={{ fill: 'currentColor' }}  />
+  return <Box overflowX="scroll"
+    height="100%" maxWidth="100%"
+    css={{
+      scrollbarWidth: "thin",
+      scrollbarColor: "currentColor transparent",
+      '::-webkit-scrollbar': {
+        height: '1.5vh',
+      },
+      '::-webkit-scrollbar-track': {
+        backgroundColor: 'none',
+      },
+      '::-webkit-scrollbar-thumb': {
+        backgroundColor: 'currentColor',
+      },
+    }}>
+    <AreaChart style={{ overflow: "visible" }} width={1000} height={125} data={data} margin={{ top: 15, right: 0, left: 20, bottom: 0 }}>
+      <XAxis interval={1} dataKey="hour" tick={{ fill: 'currentColor' }} />
       <Area isAnimationActive={false} type="monotone" dataKey="temperature" stroke="currentColor" strokeOpacity="0.3" fillOpacity="0.1">
         <LabelList dataKey="temperature" position={"top"} content={renderCustomizedLabel} />
       </Area>
