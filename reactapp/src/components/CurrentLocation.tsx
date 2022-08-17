@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Flex, Text } from "@chakra-ui/react";
-import WeatherContext, { WeatherForecast } from "../WeatherContext";
+import { AppContext } from "../AppProvider";
 
 const CurrentLocation = () => {
-  const { locationName } : WeatherForecast = useContext(WeatherContext);
+  const { weatherForecast } = useContext(AppContext);
+  const { locationName } = weatherForecast;
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",

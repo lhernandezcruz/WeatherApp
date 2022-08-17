@@ -1,4 +1,4 @@
-import { HourForecast } from "../WeatherContext";
+import { HourForecast } from "../AppProvider";
 
 export const getForecastForNextNHours = (fullHourlyForecast: Array<HourForecast>, totalHours: number) => {
   // find index of the current time and only show next 24 hours forecast

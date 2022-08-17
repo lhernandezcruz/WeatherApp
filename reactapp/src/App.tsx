@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { BiCurrentLocation } from "react-icons/bi";
+import React, { useContext } from "react";
 import CurrentWeatherDisplay from "./components/CurrentWeatherDisplay";
-import { Box, Flex, IconButton, Spinner } from "@chakra-ui/react";
+import { Box, Button, Flex, Spinner } from "@chakra-ui/react";
 import About from "./components/About";
 import HourlyForecast from "./components/HourlyForecast";
 import {
@@ -13,9 +12,9 @@ import {
   SUPER_HOT_WEATHER_GRADIENT,
   SUPER_HOT_WEATHER_MIN,
 } from "./util/Constants";
-import { fetchWeather, Location } from './api/ApiClient';
-import WeatherContext, { defaultWeatherForecast } from "./WeatherContext";
 import CurrentLocation from "./components/CurrentLocation";
+import { AppContext } from "./AppProvider";
+import { BiCurrentLocation } from "react-icons/bi";
 
 const linearGradient = (colorValues: [string, string]) => {
   return `linear(to-b, ${colorValues[0]}, ${colorValues[1]})`;
@@ -33,29 +32,17 @@ const getBackgroundGradient = (temperature: number) => {
 };
 
 function App() {
-  const [isLoading, setLoading] = useState(true);
-  const [location, setLocation] = useState<Location>({});
-  const getUserLocation = () => {
+  const { isLoading, weatherForecast, fetchData } = useContext(AppContext);
+  const updateWeatherUsingBrowserLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      setLocation({
+      fetchData({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
       });
     });
   };
-  const [weather, setWeather] = useState(defaultWeatherForecast);
-
-  useEffect(() => {
-    setLoading(true);
-    const fetchData = async () => {
-      setWeather(await fetchWeather(location));
-      setLoading(false);
-    };
-    fetchData();
-  }, [location]);
-
   return (
-    <WeatherContext.Provider value={weather}>
+    <>
       {isLoading ? (
         <Flex height="100%" width="100%" z-index="1" position="absolute" alignItems="center" justifyContent="center">
           <Spinner color="white" />
@@ -65,7 +52,7 @@ function App() {
         padding="1em"
         align="flex-start"
         height="100%"
-        bgGradient={getBackgroundGradient(weather.current.temperature)}
+        bgGradient={getBackgroundGradient(weatherForecast.current.temperature)}
         bgPos="center"
         bgSize="cover"
         color="white"
@@ -74,20 +61,19 @@ function App() {
         overflowX="hidden"
         justifyContent="space-between"
       >
-        <IconButton
-          position="fixed"
-          right="1em"
-          top="1em"
-          w={[10, 10, 10, 100]}
-          h={[10, 10, 10, 100]}
-          color="white"
-          variant="outline"
-          aria-label="Get current location"
-          icon={<BiCurrentLocation />}
-          onClick={getUserLocation}
-          hidden={!("geolocation" in navigator)}
-        />
-        <CurrentLocation />
+        <Box>
+          <Button
+            leftIcon={<BiCurrentLocation />}
+            colorScheme="gray"
+            variant="outline"
+            aria-label="Use current location"
+            onClick={updateWeatherUsingBrowserLocation}
+            hidden={!("geolocation" in navigator)}
+          >
+            Use browser location
+          </Button>
+          <CurrentLocation />
+        </Box>
         <Flex flexDirection="column" maxWidth="100%">
           <CurrentWeatherDisplay />
           <HourlyForecast />
@@ -96,7 +82,7 @@ function App() {
           </Box>
         </Flex>
       </Flex>
-    </WeatherContext.Provider>
+    </>
   );
 }
 

@@ -5,7 +5,7 @@ export interface Location {
   longitude?: number,
 }
 
-export const fetchWeather =async (location: Location) => {
+export const fetchWeather = async (location: Location) => {
   const config: AxiosRequestConfig = {
     url: process.env.REACT_APP_WEATHER_ENDPOINT
   };
