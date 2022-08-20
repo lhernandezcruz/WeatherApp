@@ -30,7 +30,8 @@
     "eslint": "^8.22.0",
     "eslint-plugin-react": "latest",
     "typescript": "^4.6.4",
-    "vite": "^3.0.7"
+    "vite": "^3.0.7",
+    "vite-plugin-pwa": "^0.12.3"
   },
   "packageManager": "yarn@3.2.2"
 }
