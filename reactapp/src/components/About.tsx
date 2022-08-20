@@ -1,5 +1,4 @@
-import React from "react";
-import { Flex, Text, Link } from "@chakra-ui/react";
+import { Flex, Text, Link } from '@chakra-ui/react';
 
 const About = () => {
   return (

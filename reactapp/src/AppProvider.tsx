@@ -1,10 +1,10 @@
-import React, { createContext, PropsWithChildren, useEffect, useState } from "react";
-import { fetchWeather } from "./api/ApiClient";
+import { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import { fetchWeather } from './api/ApiClient';
 
 export type Location = {
   latitude?: number;
   longitude?: number;
-  locationName: string;
+  locationName?: string;
 };
 
 export type HourForecast = {
@@ -29,10 +29,10 @@ export type WeatherForecast = {
 };
 
 export const defaultWeatherForecast: WeatherForecast = {
-  locationName: "Some city",
+  locationName: 'Some city',
   current: {
     temperature: 60,
-    text: "Clear",
+    text: 'Clear',
     iconCode: 1000,
     daytime: false,
   },
@@ -47,21 +47,21 @@ export const defaultWeatherForecast: WeatherForecast = {
 export type AppData = {
   isLoading: boolean;
   weatherForecast: WeatherForecast;
-  fetchData: Function;
+  fetchData: (location: Location) => void;
 };
 
 export const defaultLocation: Location = {
-  locationName: "Some city",
+  locationName: 'Some city',
 };
 
 export const defaultAppdata: AppData = {
   isLoading: false,
   weatherForecast: defaultWeatherForecast,
-  fetchData: () => { },
+  fetchData: () => ({}),
 };
 
 export const AppContext = createContext<AppData>(defaultAppdata);
-const AppProvider = ({ children }: PropsWithChildren<{}>) => {
+const AppProvider = ({ children }: PropsWithChildren<Record<string, unknown>>) => {
   const [isLoading, setLoading] = useState(true);
   const [weather, updateWeather] = useState(defaultWeatherForecast);
 

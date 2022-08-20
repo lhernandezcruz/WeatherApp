@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import CurrentWeatherDisplay from "./components/CurrentWeatherDisplay";
-import { Box, Button, Flex, Spinner } from "@chakra-ui/react";
-import About from "./components/About";
-import HourlyForecast from "./components/HourlyForecast";
+import { useContext } from 'react';
+import CurrentWeatherDisplay from './components/CurrentWeatherDisplay';
+import { Box, Button, Flex, Spinner } from '@chakra-ui/react';
+import About from './components/About';
+import HourlyForecast from './components/HourlyForecast';
 import {
   COLD_WEATHER_GRADIENT,
   WARM_WEATHER_MIN,
@@ -11,10 +11,10 @@ import {
   HOT_WEATHER_GRADIENT,
   SUPER_HOT_WEATHER_GRADIENT,
   SUPER_HOT_WEATHER_MIN,
-} from "./util/Constants";
-import CurrentLocation from "./components/CurrentLocation";
-import { AppContext } from "./AppProvider";
-import { BiCurrentLocation } from "react-icons/bi";
+} from './util/Constants';
+import CurrentLocation from './components/CurrentLocation';
+import { AppContext } from './AppProvider';
+import { BiCurrentLocation } from 'react-icons/bi';
 
 const linearGradient = (colorValues: [string, string]) => {
   return `linear(to-b, ${colorValues[0]}, ${colorValues[1]})`;
@@ -68,7 +68,7 @@ function App() {
             variant="outline"
             aria-label="Use current location"
             onClick={updateWeatherUsingBrowserLocation}
-            hidden={!("geolocation" in navigator)}
+            hidden={!('geolocation' in navigator)}
           >
             Use browser location
           </Button>
