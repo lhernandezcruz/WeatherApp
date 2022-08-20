@@ -5,12 +5,18 @@ import './index.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import AppProvider from './AppProvider';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+if (import.meta.env.VITE_MOCKING_ENABLED) {
+  const { worker } = await import('../mocks/browser');
+  await worker.start();
+  worker.printHandlers();
+}
+root.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <AppProvider>
+    <AppProvider>
+      <ChakraProvider>
         <App />
-      </AppProvider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </AppProvider>
   </React.StrictMode>
 );
