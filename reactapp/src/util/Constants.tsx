@@ -1,5 +1,5 @@
-import { IconType } from "react-icons";
-import { WiCloudy, WiDayCloudy, WiDaySunnyOvercast, WiDaySunny, WiFog, WiDaySprinkle, WiSnow, WiSleet, WiDaySnow, WiDaySleet, WiDayHaze, WiDayFog, WiDaySnowThunderstorm, WiDayThunderstorm, WiDayRain, WiDayShowers, WiRain, WiDaySnowWind, WiNightClear, WiNightCloudy, WiNightFog, WiNightSnowThunderstorm, WiNightThunderstorm, WiNightSnow, WiNightSleet, WiNightRain, WiNightSprinkle, WiNightSnowWind } from "react-icons/wi";
+import { IconType } from 'react-icons';
+import { WiCloudy, WiDayCloudy, WiDaySunnyOvercast, WiDaySunny, WiFog, WiDaySprinkle, WiSnow, WiSleet, WiDaySnow, WiDaySleet, WiDayHaze, WiDayFog, WiDaySnowThunderstorm, WiDayThunderstorm, WiDayRain, WiDayShowers, WiRain, WiDaySnowWind, WiNightClear, WiNightCloudy, WiNightFog, WiNightSnowThunderstorm, WiNightThunderstorm, WiNightSnow, WiNightSleet, WiNightRain, WiNightSprinkle, WiNightSnowWind } from 'react-icons/wi';
 
 export type IconMap = {
   [index: number]: IconType;
@@ -105,7 +105,7 @@ export const NIGHT_CODE_TO_ICON: IconMap = {
   1276: WiNightThunderstorm, //Moderate or heavy rain with thunder
   1279: WiNightSnowThunderstorm, //Patchy light snow with thunder
   1282: WiNightSnowThunderstorm, //Moderate or heavy snow with thunder
-}
+};
 
 export type Gradient = [string, string];
 export const COLD_WEATHER_GRADIENT: Gradient = ['#20667d', '#2c5875'];
