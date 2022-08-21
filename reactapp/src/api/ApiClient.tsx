@@ -1,11 +1,12 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { WeatherForecast } from '../AppProvider';
 
 export interface Location {
   latitude?: number,
   longitude?: number,
 }
 
-export const fetchWeather = async (location: Location) => {
+export const fetchWeather = async (location: Location) : Promise<WeatherForecast> => {
   const config: AxiosRequestConfig = {
     url: import.meta.env.VITE_WEATHER_ENDPOINT
   };
@@ -20,6 +21,7 @@ export const fetchWeather = async (location: Location) => {
 
   return {
     locationName: result.data.locationName,
+    location: result.data.location,
     current: result.data.current,
     hourly: result.data.hourly,
   };
