@@ -18,6 +18,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.resteasy.spi.HttpRequest;
 
 import api.AppWeatherResponse;
+import api.IpapiResponse;
 import api.IpapiService;
 import api.LocationIqResponse;
 import api.LocationIqService;
@@ -66,12 +67,13 @@ public class WeatherProxy {
 
     // TODO: add error handling
     if (latitude == null || longitude == null) {
-      CompletionStage<WeatherApiResponse> locationWeatherFuture = ipapiService.getLocation(ipService.getIpAddress(request)).thenCompose(ipInformation -> {
+      return ipapiService.getLocation(ipService.getIpAddress(request))
+      .thenCompose(ipInformation -> {
         String location = String.format(CITY_LOCATION_FORMAT, ipInformation.getCity(), ipInformation.getRegionCode(), ipInformation.getCountryCode());
-        return weatherApiService.getWeather(location, 3, weatherApiKey);
+        return weatherApiService.getWeather(location, 3, weatherApiKey).thenApply(weatherApiResponse -> {
+          return Response.ok().entity(AppWeatherResponse.fromIpapiAndWeatherApi(ipInformation, weatherApiResponse)).build();
+        });
       });
-
-      return locationWeatherFuture.thenApply(weatherApiResponse -> Response.ok().entity(AppWeatherResponse.fromWeatherApi(weatherApiResponse)).build());
     }
 
     // get the city and weather using different providers for better accuracy
