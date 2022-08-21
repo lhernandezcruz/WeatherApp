@@ -1,5 +1,10 @@
-export const location1WeatherMock = {
-  locationName: 'Location1',
+export const baseWeatherMock = {
+  locationName: 'Mountain View',
+  location: {
+    locationName: 'Mountain View',
+    latitude: 37.4043,
+    longitude: -122.0748,
+  },
   hourly: [
     {
       time: 1660978800,

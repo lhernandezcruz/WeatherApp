@@ -19,6 +19,7 @@ export type HourForecast = {
  */
 export type WeatherForecast = {
   locationName: string;
+  location: Location;
   current: {
     temperature: number;
     text: string;
@@ -30,6 +31,11 @@ export type WeatherForecast = {
 
 export const defaultWeatherForecast: WeatherForecast = {
   locationName: 'Some city',
+  location: {
+    locationName: 'Some city',
+    latitude: 37.4043,
+    longitude: -122.0748,
+  },
   current: {
     temperature: 60,
     text: 'Clear',
@@ -44,14 +50,14 @@ export const defaultWeatherForecast: WeatherForecast = {
   }),
 };
 
+export const defaultLocation: Location = {
+  locationName: 'Some city',
+};
+
 export type AppData = {
   isLoading: boolean;
   weatherForecast: WeatherForecast;
   fetchData: (location: Location) => void;
-};
-
-export const defaultLocation: Location = {
-  locationName: 'Some city',
 };
 
 export const defaultAppdata: AppData = {

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import CurrentWeatherDisplay from './components/CurrentWeatherDisplay';
-import { Box, Button, Flex, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Spinner } from '@chakra-ui/react';
 import About from './components/About';
 import HourlyForecast from './components/HourlyForecast';
 import {
@@ -14,7 +14,7 @@ import {
 } from './util/Constants';
 import CurrentLocation from './components/CurrentLocation';
 import { AppContext } from './AppProvider';
-import { BiCurrentLocation } from 'react-icons/bi';
+import SideDrawer from './components/SideDrawer';
 
 const linearGradient = (colorValues: [string, string]) => {
   return `linear(to-b, ${colorValues[0]}, ${colorValues[1]})`;
@@ -32,15 +32,7 @@ const getBackgroundGradient = (temperature: number) => {
 };
 
 function App() {
-  const { isLoading, weatherForecast, fetchData } = useContext(AppContext);
-  const updateWeatherUsingBrowserLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      fetchData({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      });
-    });
-  };
+  const { isLoading, weatherForecast } = useContext(AppContext);
   return (
     <>
       {isLoading ? (
@@ -62,16 +54,7 @@ function App() {
         justifyContent="space-between"
       >
         <Box>
-          <Button
-            leftIcon={<BiCurrentLocation />}
-            colorScheme="gray"
-            variant="outline"
-            aria-label="Use current location"
-            onClick={updateWeatherUsingBrowserLocation}
-            hidden={!('geolocation' in navigator)}
-          >
-            Use browser location
-          </Button>
+          <SideDrawer />
           <CurrentLocation />
         </Box>
         <Flex flexDirection="column" maxWidth="100%">

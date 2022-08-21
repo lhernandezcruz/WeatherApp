@@ -5642,6 +5642,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"localstorage-slim@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "localstorage-slim@npm:2.3.0"
+  checksum: 05c8cf447d4853b27b51b831c7ab398444aafd3b512975ae0e6aee1c4abef0a5675c866dc37ac52e00e5633daae10858bd3232fa6e06e6bd5894ab6e4f607b1f
+  languageName: node
+  linkType: hard
+
 "locate-path@npm:^6.0.0":
   version: 6.0.0
   resolution: "locate-path@npm:6.0.0"
@@ -7701,6 +7708,7 @@ __metadata:
     eslint: ^8.22.0
     eslint-plugin-react: latest
     framer-motion: ^7.2.0
+    localstorage-slim: ^2.3.0
     msw: ^0.44.2
     prop-types: ^15.8.1
     react: ^18.2.0

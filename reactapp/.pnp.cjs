@@ -45,6 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.22.0"],\
             ["eslint-plugin-react", "virtual:c5937c82034258df367f143aa9df0a5fd29fb625485ee7df07b7af83452a61581dd01dd40c9e8405d05979e4bb49e0bd2ceaea2b66f07ca0ed12fd25079286e0#npm:7.30.1"],\
             ["framer-motion", "virtual:c5937c82034258df367f143aa9df0a5fd29fb625485ee7df07b7af83452a61581dd01dd40c9e8405d05979e4bb49e0bd2ceaea2b66f07ca0ed12fd25079286e0#npm:7.2.0"],\
+            ["localstorage-slim", "npm:2.3.0"],\
             ["msw", "virtual:c5937c82034258df367f143aa9df0a5fd29fb625485ee7df07b7af83452a61581dd01dd40c9e8405d05979e4bb49e0bd2ceaea2b66f07ca0ed12fd25079286e0#npm:0.44.2"],\
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
@@ -8276,6 +8277,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["localstorage-slim", [\
+        ["npm:2.3.0", {\
+          "packageLocation": "./.yarn/cache/localstorage-slim-npm-2.3.0-4ab05432d1-05c8cf447d.zip/node_modules/localstorage-slim/",\
+          "packageDependencies": [\
+            ["localstorage-slim", "npm:2.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["locate-path", [\
         ["npm:6.0.0", {\
           "packageLocation": "./.yarn/cache/locate-path-npm-6.0.0-06a1e4c528-72eb661788.zip/node_modules/locate-path/",\
@@ -10753,6 +10763,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.22.0"],\
             ["eslint-plugin-react", "virtual:c5937c82034258df367f143aa9df0a5fd29fb625485ee7df07b7af83452a61581dd01dd40c9e8405d05979e4bb49e0bd2ceaea2b66f07ca0ed12fd25079286e0#npm:7.30.1"],\
             ["framer-motion", "virtual:c5937c82034258df367f143aa9df0a5fd29fb625485ee7df07b7af83452a61581dd01dd40c9e8405d05979e4bb49e0bd2ceaea2b66f07ca0ed12fd25079286e0#npm:7.2.0"],\
+            ["localstorage-slim", "npm:2.3.0"],\
             ["msw", "virtual:c5937c82034258df367f143aa9df0a5fd29fb625485ee7df07b7af83452a61581dd01dd40c9e8405d05979e4bb49e0bd2ceaea2b66f07ca0ed12fd25079286e0#npm:0.44.2"],\
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
