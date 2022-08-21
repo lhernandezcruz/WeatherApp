@@ -108,6 +108,48 @@ public class AppWeatherResponse {
     }
   }
 
+  @RegisterForReflection
+  public static class Location {
+    String locationName;
+    double latitude;
+    double longitude;
+
+    public Location() {
+
+    }
+
+    public Location(String locationName, double latitude, double longitude) {
+      this.locationName = locationName;
+      this.latitude = latitude;
+      this.longitude = longitude;
+    }
+
+    public String getLocationName() {
+      return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+      this.locationName = locationName;
+    }
+
+    public double getLatitude() {
+      return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+      this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+      return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+      this.longitude = longitude;
+    }
+  }
+
+  Location location;
   String locationName;
 
   @JsonProperty("current")
@@ -121,6 +163,14 @@ public class AppWeatherResponse {
   public AppWeatherResponse(String locationName, int temperature, String description, int icon, boolean isDaytime) {
     this.locationName = locationName;
     this.description = new Description(temperature, description, icon, isDaytime);
+  }
+
+  public Location getLocation() {
+    return location;
+  }
+
+  public void setLocation(Location location) {
+    this.location = location;
   }
 
   public String getLocationName() {
@@ -161,10 +211,19 @@ public class AppWeatherResponse {
 
     AppWeatherResponse appWeatherResponse = AppWeatherResponse.fromWeatherApi(weatherApiResponse);
     appWeatherResponse.setLocationName(locationIqResponse.getAddress().getLocation());
+    appWeatherResponse.setLocation(new Location(locationIqResponse.getAddress().getLocation(), locationIqResponse.getLat(), locationIqResponse.getLon()));
     return appWeatherResponse;
   }
 
-  public static AppWeatherResponse fromWeatherApi(WeatherApiResponse weatherApiResponse) {
+  public static AppWeatherResponse fromIpapiAndWeatherApi(IpapiResponse ipapiResponse,
+      WeatherApiResponse weatherApiResponse) {
+
+    AppWeatherResponse appWeatherResponse = AppWeatherResponse.fromWeatherApi(weatherApiResponse);
+    appWeatherResponse.setLocation(new Location(appWeatherResponse.getLocationName(), ipapiResponse.getLatitude(), ipapiResponse.getLongitude()));
+    return appWeatherResponse;
+  }
+
+  private static AppWeatherResponse fromWeatherApi(WeatherApiResponse weatherApiResponse) {
     AppWeatherResponse appWeatherResponse = new AppWeatherResponse(
         weatherApiResponse.getLocation().getName(),
         weatherApiResponse.getCurrent().getTemperature().intValue(),

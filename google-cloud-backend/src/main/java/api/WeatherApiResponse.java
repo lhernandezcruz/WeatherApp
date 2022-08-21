@@ -8,6 +8,8 @@ public class WeatherApiResponse {
     static class Location {
       String name;
       String country;
+      double lat;
+      double lon;
 
       public String getName() {
         return name;
@@ -23,6 +25,22 @@ public class WeatherApiResponse {
 
       public void setCountry(String country) {
         this.country = country;
+      }
+
+      public double getLat() {
+        return lat;
+      }
+
+      public void setLat(double lat) {
+        this.lat = lat;
+      }
+
+      public double getLon() {
+        return lon;
+      }
+
+      public void setLon(double lon) {
+        this.lon = lon;
       }
     }
 
