@@ -35,6 +35,12 @@ const DrawerExample = () => {
     ls.set('savedLocations', JSON.stringify(newSavedLocations), { encrypt: true });
     updateSavedLocations(newSavedLocations);
   };
+  console.log(savedLocations);
+  // decrypt error
+  // if (!savedLocations.find) {
+  //   updateSavedLocations([]);
+  //   ls.remove('savedLocations');
+  // }
 
   const savedLoc = savedLocations.find(({ locationName }) => {
     return locationName === weatherForecast.location.locationName;
