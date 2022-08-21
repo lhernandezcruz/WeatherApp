@@ -11,7 +11,8 @@ const DrawerExample = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { fetchData, weatherForecast } = useContext(AppContext);
   const [savedLocations, updateSavedLocations] = useState<Array<Location>>(() => {
-    return ls.get<Array<Location>>('savedLocations', { decrypt: true }) || [];
+    const savedLocations = ls.get<string>('savedLocations', { decrypt: true });
+    return JSON.parse(savedLocations || '[]');
   });
   const updateWeatherUsingBrowserLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -34,7 +35,6 @@ const DrawerExample = () => {
     ls.set('savedLocations', JSON.stringify(newSavedLocations), { encrypt: true });
     updateSavedLocations(newSavedLocations);
   };
-
 
   const savedLoc = savedLocations.find(({ locationName }) => {
     return locationName === weatherForecast.location.locationName;
