@@ -35,13 +35,6 @@ const DrawerExample = () => {
     ls.set('savedLocations', JSON.stringify(newSavedLocations), { encrypt: true });
     updateSavedLocations(newSavedLocations);
   };
-  console.log(savedLocations);
-  // decrypt error
-  // if (!savedLocations.find) {
-  //   updateSavedLocations([]);
-  //   ls.remove('savedLocations');
-  // }
-
   const savedLoc = savedLocations.find(({ locationName }) => {
     return locationName === weatherForecast.location.locationName;
   });
@@ -55,6 +48,7 @@ const DrawerExample = () => {
           variant='outline'
           aria-label={'Menu'}
           onClick={onOpen}
+          hidden={savedLocations.length === 0}
         />
         <IconButton
           icon={<BiCurrentLocation />}
