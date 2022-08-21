@@ -43,13 +43,14 @@ const DrawerExample = () => {
 
   return (
     <>
-      <HStack>
-        <IconButton
+      <HStack marginLeft="0">
+        {savedLocations.length > 0 && <IconButton
           icon={<BiMenu />}
           variant='outline'
           aria-label={'Menu'}
           onClick={onOpen}
-        />
+        />}
+
         <IconButton
           icon={<BiCurrentLocation />}
           variant='outline'
